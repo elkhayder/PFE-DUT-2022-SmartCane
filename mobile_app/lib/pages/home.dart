@@ -15,19 +15,22 @@ class _HomePageState extends State<HomePage> {
 
   bool _isBluetoothConnected = false;
   final _textInputController = TextEditingController();
-  List<String> _recievedData = [];
+  final List<String> _recievedData = [];
 
-  void _bluetoothConnect(String address) async {
+  void _bluetoothConnect() async {
+    // SMART CANE : 98:D3:33:81:3D:33
+    const String address = "98:D3:33:81:3D:33";
     try {
-      print("Connection to bluetooth device: ${address}");
+      print("Connection to bluetooth device: $address");
       _bluetoothConnection = await BluetoothConnection.toAddress(address);
       print('Connected to the device');
       setState(() {
         _isBluetoothConnected = true;
       });
       _bluetoothConnection?.input?.listen((event) {
+        print(event);
         final message = ascii.decode(event);
-        print("Recieved: ${message}");
+        print("Recieved: $message");
         setState(() {
           _recievedData.add(message);
         });
@@ -36,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _isBluetoothConnected = false;
       });
-      print("Failed connecting to bluetooth Device : ${address}");
+      print("Failed connecting to bluetooth Device : $address");
     }
   }
 
@@ -45,12 +48,16 @@ class _HomePageState extends State<HomePage> {
     await _bluetoothConnection?.close();
   }
 
+  void _bluetoothReconnect() {
+    _bluetoothDisconnect();
+    _bluetoothConnect();
+  }
+
   @override
   void initState() {
     super.initState();
 
-    // SMART CANE : 98:D3:33:81:3D:33
-    _bluetoothConnect("98:D3:33:81:3D:33");
+    _bluetoothConnect();
   }
 
   @override
@@ -74,11 +81,22 @@ class _HomePageState extends State<HomePage> {
               hintText: 'Message ...',
             ),
           ),
-          OutlinedButton(
-            onPressed: () {
-              _bluetoothConnection?.output.add(ascii.encode(_textInputController.text));
-            },
-            child: const Text("Send"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  _bluetoothConnection?.output.add(ascii.encode(_textInputController.text));
+                  _textInputController.clear();
+                },
+                child: const Text("Send"),
+              ),
+              SizedBox(width: 12),
+              OutlinedButton(
+                onPressed: _bluetoothReconnect,
+                child: const Text("Reconnect"),
+              ),
+            ],
           ),
           Expanded(
             child: ListView.builder(
