@@ -9,7 +9,7 @@ void setup() {
 
 void loop() {
   if(BTSerial.available()) {
-    Serial.write(BTSerial.read());
+    Serial.write((char) BTSerial.read());
   }
 
   if(Serial.available()) {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
@@ -15,7 +16,8 @@ class _HomePageState extends State<HomePage> {
 
   bool _isBluetoothConnected = false;
   final _textInputController = TextEditingController();
-  final List<String> _recievedData = [];
+  final List<Message> _messages = [];
+  String _messageBuffer = "";
 
   void _bluetoothConnect() async {
     // SMART CANE : 98:D3:33:81:3D:33
@@ -27,14 +29,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _isBluetoothConnected = true;
       });
-      _bluetoothConnection?.input?.listen((event) {
-        print(event);
-        final message = ascii.decode(event);
-        print("Recieved: $message");
-        setState(() {
-          _recievedData.add(message);
-        });
-      });
+      _bluetoothConnection?.input?.listen(_onRecievePayload);
     } catch (exception) {
       setState(() {
         _isBluetoothConnected = false;
@@ -53,6 +48,31 @@ class _HomePageState extends State<HomePage> {
     _bluetoothConnect();
   }
 
+  void _onRecievePayload(Uint8List payload) {
+    for (var char in payload) {
+      // 0x0A (10) corresponds to \n char
+      if (char == 0x0A) {
+        setState(() {
+          _messages.add(Message(content: _messageBuffer, isSent: false));
+          _messageBuffer = ""; // Reset Message buffer
+        });
+      } else {
+        _messageBuffer += ascii.decode([char]);
+      }
+    }
+  }
+
+  void _onSendPayload() {
+    String value = _textInputController.text;
+    _bluetoothConnection?.output.add(
+      Uint8List.fromList([...ascii.encode(value), 0x0A]),
+    );
+    _textInputController.clear();
+    setState(() {
+      _messages.add(Message(content: value, isSent: true));
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +84,7 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _bluetoothDisconnect();
     _textInputController.dispose();
+
     super.dispose();
   }
 
@@ -85,13 +106,10 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               OutlinedButton(
-                onPressed: () {
-                  _bluetoothConnection?.output.add(ascii.encode(_textInputController.text));
-                  _textInputController.clear();
-                },
+                onPressed: _onSendPayload,
                 child: const Text("Send"),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               OutlinedButton(
                 onPressed: _bluetoothReconnect,
                 child: const Text("Reconnect"),
@@ -101,9 +119,13 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return Text(_recievedData[index]);
+                Message message = _messages[_messages.length - index - 1];
+                return Text(
+                  message.content,
+                  textAlign: message.isSent ? TextAlign.right : TextAlign.left,
+                );
               },
-              itemCount: _recievedData.length,
+              itemCount: _messages.length,
               scrollDirection: Axis.vertical,
             ),
           )
@@ -111,4 +133,11 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class Message {
+  bool isSent;
+  String content;
+
+  Message({required this.content, required this.isSent});
 }
