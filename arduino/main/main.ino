@@ -1,18 +1,17 @@
-#include <SoftwareSerial.h> 
+#include <Arduino.h>
 
-SoftwareSerial BTSerial(2, 3); // TXD | RXD 
+#include "./services/bluetooth/Reciever.cpp"
+#include "./services/button/Listener.cpp"
 
-void setup() {
-  BTSerial.begin(9600);
+ButtonListener firstButton(4);
+
+void setup()
+{
   Serial.begin(9600);
 }
 
-void loop() {
-  if(BTSerial.available()) {
-    Serial.write((char) BTSerial.read());
-  }
-
-  if(Serial.available()) {
-    BTSerial.write((char) Serial.read());
-  }
+void loop()
+{
+  listenForBluetoothPayload();
+  firstButton.loop();
 }
