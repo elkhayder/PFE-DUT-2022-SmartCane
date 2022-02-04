@@ -4,7 +4,7 @@
 void sendBluetoothPayload(String command, String args[])
 {
     String payload = command + ":";
-    int argsLength = sizeof(args) / sizeof(args[0]);
+    int argsLength = sizeof(args) / sizeof(String);
     for (int i = 0; i < argsLength; i++)
     {
         payload += args[i];
