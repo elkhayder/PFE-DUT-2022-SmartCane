@@ -3,14 +3,14 @@
 class Button
 {
 public:
-    int port;
-
     // All times are in ms
     unsigned long singlePressPolling = 1000;
     // unsigned long doublePressTimeout = 500;
     // unsigned long longPressTimeout = 1000;
 
 private:
+    int _port;
+
     bool _prevState = false;
     bool _currentState = false;
 
@@ -26,7 +26,7 @@ public:
         //
     )
     {
-        port = port;
+        _port = port;
         _onPress = onPress;
         pinMode(port, INPUT);
     }
@@ -34,7 +34,7 @@ public:
     // TODO: Add onDoublePress, onLongPress
     void listen()
     {
-        _currentState = (bool)digitalRead(port);
+        _currentState = (bool)digitalRead(_port);
 
         if (_currentState == _prevState)
             return;
