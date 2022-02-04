@@ -9,6 +9,11 @@ void onPress()
   Serial.println("OnPress");
 }
 
+void onDoublePress()
+{
+  Serial.println("OnDoublePress");
+}
+
 void sensorUpdate(int distance)
 {
   Serial.print("Distance: ");
@@ -16,13 +21,13 @@ void sensorUpdate(int distance)
   Serial.println("cm");
 }
 
-Button leftButton(4, onPress);
+Button leftButton(4, onPress, onDoublePress);
 HC_SR04 proximitySensor(7, 6, sensorUpdate);
 
 void setup()
 {
   Serial.begin(9600);
-  leftButton.singlePressPolling = 500;
+  // leftButton.singlePressPolling = 500;
   proximitySensor.threshold = 50;
 }
 
@@ -30,5 +35,5 @@ void loop()
 {
   listenForBluetoothPayload();
   leftButton.listen();
-  proximitySensor.listen();
+  // proximitySensor.listen();
 }
