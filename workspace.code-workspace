@@ -1,11 +1,11 @@
 {
-   "folders": [
-	{
-		"path": "mobile_app"
-	},
-	{
-		"path": "arduino"
-	}
-],
-   "settings": {}
+	"folders": [
+		{
+			"path": "arduino\\main"
+		},
+		{
+			"path": "mobile_app"
+		}
+	],
+	"settings": {}
 }
