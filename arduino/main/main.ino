@@ -1,39 +1,27 @@
 #include <Arduino.h>
 
-#include "./services/bluetooth/Reciever.cpp"
-#include "./services/sensors/Button.cpp"
-#include "./services/sensors/HC-SR04.cpp"
+#include "./services/Bluetooth.cpp"
 
-void onPress()
-{
-  Serial.println("OnPress");
-}
-
-void onDoublePress()
-{
-  Serial.println("OnDoublePress");
-}
-
-void sensorUpdate(int distance)
-{
-  Serial.print("Distance: ");
-  Serial.print(distance);
-  Serial.println("cm");
-}
-
-Button leftButton(4, onPress, onDoublePress);
-HC_SR04 proximitySensor(7, 6, sensorUpdate);
+#include "./handlers/ProximityVibrator.cpp"
+#include "./handlers/BatteryReader.cpp"
+#include "./handlers/LeftButton.cpp"
 
 void setup()
 {
   Serial.begin(9600);
-  // leftButton.singlePressPolling = 500;
-  proximitySensor.threshold = 50;
+
+  Bluetooth::setup();
+  //
+  ProximityVibrator::setup();
+  BatteryReader::setup();
+  LeftButton::setup();
 }
 
 void loop()
 {
-  listenForBluetoothPayload();
-  leftButton.listen();
-  // proximitySensor.listen();
+  Bluetooth::loop();
+  //
+  ProximityVibrator::loop();
+  BatteryReader::loop();
+  LeftButton::loop();
 }

@@ -1,25 +1,32 @@
 #include <Arduino.h>
 
+// TODO: Remove those
+#define DEBUG_OUT Serial
+#include <Arduino_Helpers.h>
+#include <AH/Debug/Debug.hpp>
+
 class HC_SR04
 {
 public:
-    int threshold = NULL;
+    double threshold = 0;      // in cm
+    unsigned long polling = 0; // in ms
 
 private:
     int _echoPin;
     int _trigPin;
+    void (*_onUpdate)(double);
 
-    unsigned long _trigAt = NULL;
-    unsigned long _echoHighAt = NULL;
-
-    bool _waitingForEcho = false;
-    void (*_onUpdate)(int);
+    bool _isTriggering = false;
+    unsigned long _triggeringStartedAt = 0;
+    bool _isEchoing = false;
+    unsigned long _echoingStartedAt = 0;
 
 public:
+    // echo, trig
     HC_SR04(
         int echo,
         int trig,
-        void (*onUpdate)(int)
+        void (*onUpdate)(double)
         //
     )
     {
@@ -35,43 +42,40 @@ public:
 
     void listen()
     {
-        bool _echoIsHigh = (bool)digitalRead(_echoPin);
-
-        if (!_waitingForEcho)
+        if (_isEchoing)
         {
-            if (_trigAt == NULL)
+            bool _echoState = digitalRead(_echoPin);
+
+            if (_echoState && !_echoingStartedAt)
             {
-                digitalWrite(_trigPin, HIGH);
-                _trigAt = micros();
-                return;
+                _echoingStartedAt = micros();
             }
-            else
+            else if (_echoingStartedAt && !_echoState)
             {
-                if (micros() >= _trigAt + 20)
-                {
-                    digitalWrite(_trigPin, LOW);
-                    _waitingForEcho = true;
-                    _trigAt = NULL;
-                }
+                unsigned long _duration = micros() - _echoingStartedAt;
+                double _distance = _duration * 0.034 / 2;
+                _isEchoing = false;
+                _echoingStartedAt = 0;
+
+                _onUpdate(_distance);
             }
         }
         else
         {
-            if (_echoHighAt == NULL)
+            if (!_isTriggering)
             {
-                if (_echoIsHigh)
-                    _echoHighAt = micros();
+                digitalWrite(_trigPin, HIGH);
+                _triggeringStartedAt = micros();
+                _isTriggering = true;
             }
             else
             {
-                if (!_echoIsHigh)
+                if (micros() >= _triggeringStartedAt + 10)
                 {
-                    unsigned long _time = micros() - _echoHighAt;
-                    int _distance = 0.034 * _time / 2; // in cm
-                    _echoHighAt = NULL;
-                    _waitingForEcho = false;
-                    if (threshold != NULL && _distance <= threshold)
-                        _onUpdate(_distance);
+                    digitalWrite(_trigPin, LOW);
+                    _triggeringStartedAt = 0;
+                    _isTriggering = false;
+                    _isEchoing = true;
                 }
             }
         }
