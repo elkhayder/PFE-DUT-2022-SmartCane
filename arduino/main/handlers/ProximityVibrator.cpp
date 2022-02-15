@@ -3,7 +3,7 @@
 
 namespace ProximityVibrator
 {
-    const int _VibratorPort = 6;
+    const int _VibratorPort = 5;
 
     const int MIN_VIBRATION_VAL = 10;
     const int MAX_VIBRATION_VAL = 255;
@@ -20,7 +20,7 @@ namespace ProximityVibrator
         // DEBUGVAL(_val, distance);
     }
 
-    HC_SR04 sensor(2, 3, onUpdate);
+    HC_SR04 sensor(10, 9, onUpdate); // Echo, Trig, onUpdate
 
     void setup()
     {

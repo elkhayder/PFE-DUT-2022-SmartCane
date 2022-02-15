@@ -5,30 +5,11 @@
 
 namespace Bluetooth
 {
-    SoftwareSerial BTSerial(4, 5); // TXD | RXD
+    SoftwareSerial BTSerial(4, 3); // TXD | RXD
+    const int statePin = 2;
     String _payloadBuffer;
 
-    void setup()
-    {
-        BTSerial.begin(9600);
-    }
-
-    void loop()
-    {
-        if (BTSerial.available())
-        {
-            int thisChar = BTSerial.read();
-            if (thisChar == 0xA)
-            {
-                parsePayload(_payloadBuffer); // Parse payload
-                _payloadBuffer = "";          // Reset payload buffer
-            }
-            else
-            {
-                _payloadBuffer += ((char)thisChar); // Add current char to bufferPayload
-            }
-        }
-    }
+    bool isConnected = false;
 
     void send(String command, String args[])
     {
@@ -51,6 +32,43 @@ namespace Bluetooth
     {
         Serial.print(payload);
     }
+
+    void onConnect()
+    {
+    }
+
+    //
+
+    void setup()
+    {
+        BTSerial.begin(9600);
+        pinMode(statePin, INPUT);
+    }
+
+    void loop()
+    {
+        bool isConnectNow = digitalRead(statePin);
+
+        if (isConnectNow && !isConnected)
+            onConnect();
+
+        if (BTSerial.available())
+        {
+            int thisChar = BTSerial.read();
+            if (thisChar == 0xA)
+            {
+                parsePayload(_payloadBuffer); // Parse payload
+                _payloadBuffer = "";          // Reset payload buffer
+            }
+            else
+            {
+                _payloadBuffer += ((char)thisChar); // Add current char to bufferPayload
+            }
+        }
+
+        isConnected = isConnected;
+    }
+
 }
 
 #endif
