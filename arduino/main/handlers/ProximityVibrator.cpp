@@ -1,4 +1,6 @@
-#include <Arduino.h>
+#ifndef PROXIMITY_VIBRATOR_HANDLER
+#define PROXIMITY_VIBRATOR_HANDLER
+
 #include "../services/sensors/HC-SR04.cpp"
 
 namespace ProximityVibrator
@@ -17,10 +19,10 @@ namespace ProximityVibrator
     void onUpdate(double distance)
     {
         _val = max(MIN_VIBRATION_VAL + (SENSOR_THRESHOLD - distance) * (MAX_VIBRATION_VAL - MIN_VIBRATION_VAL) / (SENSOR_THRESHOLD - 2), 0);
-        // DEBUGVAL(_val, distance);
+        Serial.println(distance);
     }
 
-    HC_SR04 sensor(10, 9, onUpdate); // Echo, Trig, onUpdate
+    HC_SR04 sensor(7, 6, onUpdate); // Echo, Trig, onUpdate
 
     void setup()
     {
@@ -34,3 +36,5 @@ namespace ProximityVibrator
         analogWrite(_VibratorPort, _val);
     }
 }
+
+#endif

@@ -8,20 +8,20 @@
 
 void setup()
 {
-  Serial.begin(9600);
+    Serial.begin(9600);
 
-  Bluetooth::setup();
-  //
-  ProximityVibrator::setup();
-  BatteryReader::setup();
-  LeftButton::setup();
+    Bluetooth::setup();
+    //
+    ProximityVibrator::setup();
+    BatteryReader::setup();
+    LeftButton::setup();
 }
 
 void loop()
 {
-  Bluetooth::loop();
-  //
-  ProximityVibrator::loop();
-  BatteryReader::loop();
-  LeftButton::loop();
+    // Bluetooth::loop();
+    //
+    ProximityVibrator::loop();
+    // BatteryReader::loop();
+    LeftButton::loop();
 }
