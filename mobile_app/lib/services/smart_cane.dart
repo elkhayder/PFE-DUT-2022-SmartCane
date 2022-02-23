@@ -55,7 +55,6 @@ class SmartCaneService extends ChangeNotifier {
   void _onRecievePayload(Uint8List payload) {
     for (var char in payload) {
       // 0x0A (10) corresponds to \n char
-      print(char);
       if (char == 0x0A) {
         parseBluetoothPayload(_payloadBuffer);
         _payloadBuffer = ""; // Reset Message buffer
@@ -66,7 +65,12 @@ class SmartCaneService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void sendPayload(String payload) {
+  void send(String command, List<String> args) {
+    String payload = command + ":" + args.join("|");
+    _sendPayload(payload);
+  }
+
+  void _sendPayload(String payload) {
     _connection?.output.add(
       Uint8List.fromList([...ascii.encode(payload), 0x0A]),
     );

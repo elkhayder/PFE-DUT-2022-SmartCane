@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/bluetooth/bluetooth_payload_handler.dart';
 import 'package:mobile_app/services/location.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 import '../services/smart_cane.dart';
 
@@ -44,20 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Row _buildCurrentLocationRow(BuildContext context) {
     final location = Provider.of<LocationService>(context);
 
-    String currentPosition = "Unknown";
-
-    if (location.placemarks.isNotEmpty) {
-      var p = location.placemarks.elementAt(0);
-      currentPosition = [
-        p.name,
-        p.street,
-        p.subLocality,
-        p.subAdministrativeArea,
-        p.postalCode,
-        p.locality,
-        p.country
-      ].where((element) => element?.isNotEmpty ?? false).join(", ");
-    }
+    String currentPosition = location.placemark ?? "Unknown";
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Text(
-              "Your current location: $currentPosition",
+              "Votre localisation actuelle est: $currentPosition",
             ),
           ),
         ),
@@ -75,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         IconButton(
           onPressed: () => location.updateCurrentLocation(),
           icon: const Icon(Icons.gps_fixed),
-          tooltip: "Refresh location",
+          tooltip: "Rafraîchir l'emplacement",
         )
       ],
     );
@@ -94,26 +79,37 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-            "SmartCane ${!smartCane.isConnected ? "Connected, Battery ${smartCane.batteryPercentage}%" : "Disconnected"}"),
+            "SmartCane est ${smartCane.isConnected ? "connectée. Batterie ${smartCane.batteryPercentage}%" : "déconnecté"}"),
         const SizedBox(height: 24),
         OutlinedButton(
-          child: Text("${smartCane.isConnected ? "Disconnected" : "Connect"} SmartCane"),
+          child: Text("${smartCane.isConnected ? "Déconnecter" : "Connecter"} la SmartCane"),
           style: _outlinedButtonStyle,
           onPressed: smartCane.isConnected ? smartCane.disconnect : smartCane.connect,
         ),
         _spacing,
         OutlinedButton(
           onPressed: () {
-            // FlutterRingtonePlayer.playRingtone(volume: 1);
-            parseBluetoothPayload("BATTERY_PERCENTAGE:30");
+            Navigator.of(context).pushNamed("/places/explore");
           },
-          child: const Text("Where is my SmartCane?"),
+          child: const Text("Découvrir"),
           style: _outlinedButtonStyle,
         ),
         _spacing,
         OutlinedButton(
           onPressed: () {},
-          child: const Text("Navigation"),
+          child: const Text("Navigate"),
+          style: _outlinedButtonStyle,
+        ),
+        _spacing,
+        OutlinedButton(
+          onPressed: () {},
+          child: const Text("My Places"),
+          style: _outlinedButtonStyle,
+        ),
+        _spacing,
+        OutlinedButton(
+          onPressed: () {},
+          child: const Text("Where is my SmartCane?"),
           style: _outlinedButtonStyle,
         ),
       ],

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/screens/bluetooth.dart';
-import 'package:mobile_app/services/navigation.dart';
+import 'package:mobile_app/includes/navigation.dart';
+import 'package:mobile_app/screens/place/find_by_type.dart';
 import 'package:mobile_app/services/smart_cane.dart';
 import 'package:mobile_app/services/location.dart';
 import 'package:provider/provider.dart';
 
-import '/screens/home.dart';
-import '/screens/maps.dart';
-import '/models/screen.dart';
+import 'package:mobile_app/screens/bottom_navigation_bar.dart';
+import 'package:mobile_app/screens/explore.dart';
+import 'package:mobile_app/screens/find_my_phone.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,26 +23,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _bottomNavigationCurrentIndex = 0;
-
-  final List<Screen> _screens = [
-    Screen(
-      icon: Icons.home,
-      label: "Home",
-      screen: const HomeScreen(),
-    ),
-    Screen(
-      icon: Icons.bluetooth,
-      label: "Bluetooth",
-      screen: const BluetoothScreen(),
-    ),
-    Screen(
-      icon: Icons.map,
-      label: "Map",
-      screen: const MapsScreen(),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -62,41 +42,47 @@ class _MyAppState extends State<MyApp> {
                 elevation: 0,
               ),
         ),
-        home: SafeArea(
-          child: Scaffold(
-            body: IndexedStack(
-              children: _screens.map((e) {
-                int index = _screens.indexOf(e);
-                // Ignoring symantics for hidden pages
-                return ExcludeSemantics(
-                  child: e.screen,
-                  excluding: index != _bottomNavigationCurrentIndex,
-                );
-              }).toList(),
-              index: _bottomNavigationCurrentIndex,
-              sizing: StackFit.expand,
-            ),
-            bottomNavigationBar: _bottomNavigationBar(),
-          ),
+        initialRoute: "/",
+        onGenerateRoute: _onGenerateRoute,
+      ),
+    );
+  }
+
+  Route<dynamic> _onGenerateRoute(RouteSettings settings) {
+    Widget? screen;
+
+    final args = settings.arguments as Map?;
+
+    switch (settings.name) {
+      case "/":
+        screen = const BottomNavigationBarScreen();
+        break;
+
+      case "/findMyPhone":
+        screen = const FindMyPhoneScreen();
+        break;
+
+      case "/places/explore":
+        screen = const ExploreScreen();
+        break;
+
+      case "/places/findByType":
+        screen = FindPlacesByTypeScreen(
+          type: args?["type"],
+        );
+        break;
+    }
+
+    return MaterialPageRoute(
+      builder: (_) => SafeArea(
+        child: Scaffold(
+          body: screen ?? _errorScreen(settings),
         ),
       ),
     );
   }
 
-  Widget _bottomNavigationBar() {
-    return BottomNavigationBar(
-      items: _screens.map((e) {
-        return BottomNavigationBarItem(
-          icon: Icon(e.icon),
-          label: e.label,
-        );
-      }).toList(),
-      currentIndex: _bottomNavigationCurrentIndex,
-      onTap: (value) {
-        setState(() {
-          _bottomNavigationCurrentIndex = value;
-        });
-      },
-    );
+  Widget _errorScreen(RouteSettings settings) {
+    return Center(child: Text("Error: ${settings.name} not found"));
   }
 }

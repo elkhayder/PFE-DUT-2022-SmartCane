@@ -6,7 +6,7 @@ class LocationService extends ChangeNotifier {
   final location_package.Location _location = location_package.Location();
 
   location_package.LocationData? currentLocation;
-  List<geo_coding.Placemark> placemarks = [];
+  String? placemark;
 
   location_package.PermissionStatus? _permissionGranted;
 
@@ -48,7 +48,23 @@ class LocationService extends ChangeNotifier {
 
   Future<void> updateCurrentPlacemarks() async {
     if (currentLocation == null) return;
-    placemarks = await geo_coding.placemarkFromCoordinates(
-        currentLocation!.latitude!, currentLocation!.longitude!);
+    try {
+      var placemarks = await geo_coding.placemarkFromCoordinates(
+          currentLocation!.latitude!, currentLocation!.longitude!);
+
+      var p = placemarks.elementAt(0);
+
+      placemark = [
+        p.name,
+        p.street,
+        p.subLocality,
+        p.subAdministrativeArea,
+        p.postalCode,
+        p.locality,
+        p.country
+      ].where((element) => element?.isNotEmpty ?? false).join(", ");
+    } catch (exception) {
+      placemark = null;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:mobile_app/bluetooth/handlers/start_phone_ringtone.dart';
 import 'package:mobile_app/bluetooth/handlers/update_cane_battery_percentage.dart';
 
 import 'handlers/send_current_location_sms.dart';
@@ -14,11 +15,10 @@ void parseBluetoothPayload(String payload) {
   final List<String> args =
       payload.split(":").length == 2 ? payload.split(":").elementAt(1).split("|") : [];
 
-  print("$command ${args.toString()}");
-
   final List<BluetoothPayloadHandler> _handlers = [
     SendCurrentLocationSMS(),
-    UpdateCaneBatteryPercentage()
+    UpdateCaneBatteryPercentage(),
+    StartPhoneRingtone()
   ];
 
   for (var handler in _handlers) {

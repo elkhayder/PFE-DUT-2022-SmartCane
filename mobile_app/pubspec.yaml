@@ -40,6 +40,10 @@ dependencies:
    geocoding: ^2.0.2
    provider: ^6.0.2
    flutter_ringtone_player: ^3.1.1
+   google_directions_api: ^0.9.0
+   google_place: ^0.4.7
+   flutter_polyline_points: ^1.0.0
+   maps_toolkit: ^2.0.0
 
 dev_dependencies:
    flutter_test:

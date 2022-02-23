@@ -1,44 +1,40 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../services/location.dart';
+import 'package:mobile_app/includes/constants.dart';
+import 'package:google_directions_api/google_directions_api.dart';
 
 class MapsScreen extends StatefulWidget {
   const MapsScreen({Key? key}) : super(key: key);
-
-  final String apiKey = "AIzaSyDkFh2Pll810FIqdiAuLRjE8PXo7TLEVE0";
 
   @override
   State<MapsScreen> createState() => _MapsScreenState();
 }
 
 class _MapsScreenState extends State<MapsScreen> {
+  final directionsService = DirectionsService();
+
+  final request = const DirectionsRequest(
+    origin: "33.6027558,-7.6361065",
+    destination: '33.6003771,-7.6326147',
+    travelMode: TravelMode.walking,
+  );
+
   @override
   void initState() {
     super.initState();
+    DirectionsService.init(Constants.GOOGLE_API_KEY);
   }
 
   @override
   Widget build(BuildContext context) {
-    final location = Provider.of<LocationService>(context);
-
-    return ListView.separated(
-      itemBuilder: (context, index) {
-        var placemark = location.placemarks[index];
-        return Text(
-          [
-            placemark.name,
-            placemark.street,
-            placemark.thoroughfare,
-            placemark.subLocality,
-            placemark.locality,
-            placemark.administrativeArea,
-            placemark.country
-          ].where((e) => (e != null && e.isNotEmpty)).toList().join(", "),
-        );
-      },
-      itemCount: location.placemarks.length,
-      separatorBuilder: (context, index) {
-        return const SizedBox(height: 10);
+    return ElevatedButton(
+      child: const Text("Update"),
+      onPressed: () {
+        directionsService.route(request, (DirectionsResult response, DirectionsStatus? status) {
+          inspect(response);
+          inspect(status);
+        });
       },
     );
   }

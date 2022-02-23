@@ -19,9 +19,9 @@ void setup()
 
 void loop()
 {
-    // Bluetooth::loop();
+    Bluetooth::loop();
     //
     ProximityVibrator::loop();
-    // BatteryReader::loop();
+    BatteryReader::loop();
     LeftButton::loop();
 }
