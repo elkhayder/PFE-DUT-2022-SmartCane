@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/models/screen.dart';
-import 'package:mobile_app/screens/bluetooth.dart';
 import 'package:mobile_app/screens/home.dart';
-import 'package:mobile_app/screens/maps.dart';
+import 'package:mobile_app/screens/settings.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
   const BottomNavigationBarScreen({Key? key}) : super(key: key);
@@ -16,19 +15,16 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
 
   final List<Screen> _screens = [
     Screen(
-      icon: Icons.home,
-      label: "Home",
+      activeIcon: Icons.navigation,
+      inactiveIcon: Icons.navigation_outlined,
+      label: "Accueil",
       screen: const HomeScreen(),
     ),
     Screen(
-      icon: Icons.bluetooth,
-      label: "Bluetooth",
-      screen: const BluetoothScreen(),
-    ),
-    Screen(
-      icon: Icons.map,
-      label: "Map",
-      screen: const MapsScreen(),
+      activeIcon: Icons.settings,
+      inactiveIcon: Icons.settings_outlined,
+      label: "Paramètre",
+      screen: const SettingScreen(),
     ),
   ];
 
@@ -54,8 +50,13 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   Widget _bottomNavigationBar() {
     return BottomNavigationBar(
       items: _screens.map((e) {
+        var index = _screens.indexOf(e);
         return BottomNavigationBarItem(
-          icon: Icon(e.icon),
+          icon: Icon(
+            _bottomNavigationCurrentIndex == index
+                ? e.activeIcon
+                : (e.inactiveIcon ?? e.activeIcon),
+          ),
           label: e.label,
         );
       }).toList(),

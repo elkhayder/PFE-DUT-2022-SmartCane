@@ -44,6 +44,9 @@ dependencies:
    google_place: ^0.4.7
    flutter_polyline_points: ^1.0.0
    maps_toolkit: ^2.0.0
+   shared_preferences_android: ^2.0.11
+   shared_preferences: ^2.0.13
+   fluttercontactpicker: ^4.6.0
 
 dev_dependencies:
    flutter_test:

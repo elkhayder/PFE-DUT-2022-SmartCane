@@ -1,8 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_app/includes/navigation.dart';
+import 'package:mobile_app/screens/favourites_places.dart';
 import 'package:mobile_app/screens/place/find_by_type.dart';
+import 'package:mobile_app/screens/place/info.dart';
+import 'package:mobile_app/screens/place/navigate.dart';
+import 'package:mobile_app/screens/search_place.dart';
+import 'package:mobile_app/screens/settings/emergency_contacts.dart';
 import 'package:mobile_app/services/smart_cane.dart';
 import 'package:mobile_app/services/location.dart';
+import 'package:mobile_app/services/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mobile_app/screens/bottom_navigation_bar.dart';
@@ -10,7 +19,16 @@ import 'package:mobile_app/screens/explore.dart';
 import 'package:mobile_app/screens/find_my_phone.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocationService()),
+        ChangeNotifierProvider(create: (_) => SmartCaneService()),
+        ChangeNotifierProvider(create: (_) => ThemeService()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 // Addr = 98d3:33:813d33
@@ -24,27 +42,38 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+
+    if (Platform.isAndroid) {
+      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocationService()),
-        ChangeNotifierProvider(create: (_) => SmartCaneService()),
-      ],
-      child: MaterialApp(
-        title: 'Smart Cane',
-        debugShowCheckedModeBanner: false,
-        navigatorKey: GlobalContextService.navigatorKey, // set property
-        // showSemanticsDebugger: true,
-        themeMode: ThemeMode.dark,
-        darkTheme: ThemeData.dark().copyWith(
-          appBarTheme: ThemeData.dark().appBarTheme.copyWith(
-                centerTitle: true,
-                elevation: 0,
-              ),
-        ),
-        initialRoute: "/",
-        onGenerateRoute: _onGenerateRoute,
+    var theme = Provider.of<ThemeService>(context);
+
+    return MaterialApp(
+      title: 'Smart Cane',
+      debugShowCheckedModeBanner: false,
+      navigatorKey: GlobalContextService.navigatorKey, // set property
+      // showSemanticsDebugger: true,
+      themeMode: theme.mode,
+      darkTheme: ThemeData.dark().copyWith(
+        appBarTheme: ThemeData.dark().appBarTheme.copyWith(
+              centerTitle: true,
+              elevation: 1,
+            ),
       ),
+      theme: ThemeData.light().copyWith(
+        appBarTheme: ThemeData.light().appBarTheme.copyWith(
+              centerTitle: true,
+              elevation: 1,
+            ),
+      ),
+      initialRoute: "/",
+      onGenerateRoute: _onGenerateRoute,
     );
   }
 
@@ -66,10 +95,35 @@ class _MyAppState extends State<MyApp> {
         screen = const ExploreScreen();
         break;
 
+      case "/places/search":
+        screen = SearchPlaceScreen();
+        break;
+
+      case "/places/favourite":
+        screen = const FavouritePlacesScreen();
+        break;
+
       case "/places/findByType":
         screen = FindPlacesByTypeScreen(
           type: args?["type"],
         );
+        break;
+
+      case "/places/navigate":
+        screen = NavigateScreen(
+          place: args?["place"],
+          directions: args?["directions"],
+        );
+        break;
+
+      case "/places/info":
+        screen = PlaceInfosScreen(
+          placeId: args?["placeId"],
+        );
+        break;
+
+      case "/settings/emergency_contacts":
+        screen = EmergencyContactsSettingsScreen();
         break;
     }
 

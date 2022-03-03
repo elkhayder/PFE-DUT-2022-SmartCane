@@ -22,7 +22,7 @@ namespace ProximityVibrator
         Serial.println(distance);
     }
 
-    HC_SR04 sensor(7, 6, onUpdate); // Echo, Trig, onUpdate
+    HC_SR04 sensor(8, 7, onUpdate); // Echo, Trig, onUpdate
 
     void setup()
     {

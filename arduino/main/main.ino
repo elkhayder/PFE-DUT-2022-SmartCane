@@ -23,5 +23,5 @@ void loop()
     //
     ProximityVibrator::loop();
     BatteryReader::loop();
-    LeftButton::loop();
+    // LeftButton::loop();
 }

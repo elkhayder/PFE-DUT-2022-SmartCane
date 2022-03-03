@@ -23,17 +23,19 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("Home"),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16).copyWith(top: 12),
-        child: Column(
-          children: [
-            _buildCurrentLocationRow(context),
-            const Divider(
-              height: 60,
-              thickness: 1,
-            ),
-            _buildActionButtons(context),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16).copyWith(top: 12),
+          child: Column(
+            children: [
+              _buildCurrentLocationRow(context),
+              const Divider(
+                height: 60,
+                thickness: 1,
+              ),
+              _buildActionButtons(context),
+            ],
+          ),
         ),
       ),
     );
@@ -96,20 +98,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         _spacing,
         OutlinedButton(
-          onPressed: () {},
-          child: const Text("Navigate"),
+          onPressed: () {
+            Navigator.of(context).pushNamed("/places/search");
+          },
+          child: const Text("Chercher un endroit"),
+          style: _outlinedButtonStyle,
+        ),
+        _spacing,
+        OutlinedButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/places/favourite");
+          },
+          child: const Text("Mes endroits préférés"),
           style: _outlinedButtonStyle,
         ),
         _spacing,
         OutlinedButton(
           onPressed: () {},
-          child: const Text("My Places"),
-          style: _outlinedButtonStyle,
-        ),
-        _spacing,
-        OutlinedButton(
-          onPressed: () {},
-          child: const Text("Where is my SmartCane?"),
+          child: const Text("Où est ma SmartCane?"),
           style: _outlinedButtonStyle,
         ),
       ],

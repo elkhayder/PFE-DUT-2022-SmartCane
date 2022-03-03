@@ -3,9 +3,19 @@ import 'package:location/location.dart' as location_package;
 import 'package:geocoding/geocoding.dart' as geo_coding;
 
 class LocationService extends ChangeNotifier {
-  final location_package.Location _location = location_package.Location();
+  final location_package.Location _service = location_package.Location();
 
-  location_package.LocationData? currentLocation;
+  location_package.Location get service => _service;
+
+  location_package.LocationData? _currentLocation;
+
+  location_package.LocationData? get currentLocation => _currentLocation;
+
+  set currentLocation(location_package.LocationData? v) {
+    _currentLocation = v;
+    notifyListeners();
+  }
+
   String? placemark;
 
   location_package.PermissionStatus? _permissionGranted;
@@ -17,25 +27,25 @@ class LocationService extends ChangeNotifier {
   }
 
   Future<location_package.LocationData?> updateCurrentLocation() async {
-    _serviceEnabled = await _location.serviceEnabled();
+    _serviceEnabled = await _service.serviceEnabled();
 
     if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
+      _serviceEnabled = await _service.requestService();
       if (!_serviceEnabled) {
         return null;
       }
     }
 
-    _permissionGranted = await _location.hasPermission();
+    _permissionGranted = await _service.hasPermission();
 
     if (_permissionGranted == location_package.PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
+      _permissionGranted = await _service.requestPermission();
       if (_permissionGranted != location_package.PermissionStatus.granted) {
         return null;
       }
     }
 
-    location_package.LocationData thisLocation = await _location.getLocation();
+    location_package.LocationData thisLocation = await _service.getLocation();
 
     currentLocation = thisLocation;
 
