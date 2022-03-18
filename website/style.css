@@ -58,6 +58,6 @@ button:hover {
    background-color: rgb(88, 88, 88);
 }
 
-button.open {
+a.open {
    margin-bottom: 12px !important;
 }

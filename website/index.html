@@ -16,11 +16,15 @@
    </head>
    <body>
       <section id="head">
-         <!-- <h1 class="title">J'ai partagé un endroit avec vous</h1> -->
          <h1 class="title">I shared a place with you</h1>
          <h2 class="place" id="place">Hill's</h2>
-         <button class="open">Open in app</button>
-         <a href="#download"><button>Download SmartCane app</button></a>
+         <a id="openInAppLink" class="open"><button>Open in app</button></a>
+         <a
+            href="https://github.com/elkhayder/SmartCane-PFE-2022"
+            target="_blank"
+         >
+            <button>Download SmartCane app</button>
+         </a>
       </section>
 
       <script>
@@ -28,6 +32,9 @@
             const url = new URL(window.location.href);
             document.getElementById("place").innerText =
                url.searchParams.get("name");
+            document
+               .getElementById("openInAppLink")
+               .setAttribute("href", window.location.href);
          };
       </script>
    </body>
