@@ -15,13 +15,15 @@ void setup()
     ProximityVibrator::setup();
     BatteryReader::setup();
     LeftButton::setup();
+
+    // delay(1000);
 }
 
 void loop()
 {
-    Bluetooth::loop();
+    // Bluetooth::loop();
     //
     ProximityVibrator::loop();
-    BatteryReader::loop();
-    // LeftButton::loop();
+    // BatteryReader::loop();
+    LeftButton::loop();
 }

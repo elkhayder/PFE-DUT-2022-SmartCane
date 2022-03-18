@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:google_directions_api/google_directions_api.dart';
 import 'package:google_place/google_place.dart';
+import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:mobile_app/includes/constants.dart';
 import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/models/place.dart';
@@ -130,8 +131,6 @@ class Helpers {
       await directionsService.route(request, (DirectionsResult response, DirectionsStatus? status) {
         if (status == DirectionsStatus.ok) {
           result = response.routes;
-        } else {
-          print(status);
         }
       });
     } catch (e) {
@@ -139,5 +138,21 @@ class Helpers {
     }
 
     return result;
+  }
+
+  static LatLng closestPointOnPath(LatLng position, List<LatLng> path) {
+    double closestPointDistance = double.infinity;
+    LatLng closestPoint = path[0];
+
+    for (var point in path) {
+      var d = SphericalUtil.computeDistanceBetween(position, point);
+
+      if (d < closestPointDistance) {
+        closestPointDistance = d.toDouble();
+        closestPoint = point;
+      }
+    }
+
+    return closestPoint;
   }
 }

@@ -44,20 +44,20 @@ public:
     {
         if (_isEchoing)
         {
-
-            bool _echoState = (bool)digitalRead(_echoPin);
+            // bool _echoState = (bool)digitalRead(_echoPin);
 
             // Serial.println(_echoState);
 
-            if (_echoState && !_echoingStartedAt)
+            if (digitalRead(_echoPin) && !_echoingStartedAt)
             {
                 _echoingStartedAt = micros();
             }
 
-            if (!_echoState && _echoingStartedAt)
+            if (!digitalRead(_echoPin) && _echoingStartedAt)
             {
                 unsigned long _duration = micros() - _echoingStartedAt;
                 double _distance = _duration * 0.034 / 2;
+
                 _isEchoing = false;
                 _echoingStartedAt = 0;
 
@@ -78,7 +78,10 @@ public:
                 _triggeringStartedAt = 0;
                 _isTriggering = false;
                 _isEchoing = true;
+                // _echoingStartedAt = micros();
             }
         }
+
+        // DEBUGVAL(_isTriggering, _triggeringStartedAt, _isEchoing, _echoingStartedAt);
     }
 };

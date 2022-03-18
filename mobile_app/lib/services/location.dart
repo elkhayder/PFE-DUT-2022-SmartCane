@@ -4,13 +4,12 @@ import 'package:geocoding/geocoding.dart' as geo_coding;
 
 class LocationService extends ChangeNotifier {
   final location_package.Location _service = location_package.Location();
-
   location_package.Location get service => _service;
 
+  late Stream<location_package.LocationData> stream;
+
   location_package.LocationData? _currentLocation;
-
   location_package.LocationData? get currentLocation => _currentLocation;
-
   set currentLocation(location_package.LocationData? v) {
     _currentLocation = v;
     notifyListeners();
@@ -18,11 +17,17 @@ class LocationService extends ChangeNotifier {
 
   String? placemark;
 
-  location_package.PermissionStatus? _permissionGranted;
+  location_package.PermissionStatus? _permissionStatus;
 
   bool _serviceEnabled = false;
 
   LocationService() {
+    stream = _service.onLocationChanged.asBroadcastStream();
+    _service.changeSettings(
+      accuracy: location_package.LocationAccuracy.navigation,
+      distanceFilter: 10,
+      interval: 5000,
+    );
     updateCurrentLocation();
   }
 
@@ -36,11 +41,11 @@ class LocationService extends ChangeNotifier {
       }
     }
 
-    _permissionGranted = await _service.hasPermission();
+    _permissionStatus = await _service.hasPermission();
 
-    if (_permissionGranted == location_package.PermissionStatus.denied) {
-      _permissionGranted = await _service.requestPermission();
-      if (_permissionGranted != location_package.PermissionStatus.granted) {
+    if (_permissionStatus == location_package.PermissionStatus.denied) {
+      _permissionStatus = await _service.requestPermission();
+      if (_permissionStatus != location_package.PermissionStatus.granted) {
         return null;
       }
     }

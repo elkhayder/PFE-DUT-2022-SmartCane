@@ -15,6 +15,7 @@ class FavouritePlacesScreen extends StatefulWidget {
 
 class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
   List<Place> _places = [];
+  List<String> _placesIds = [];
 
   bool isLoading = true;
 
@@ -32,15 +33,19 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
   }
 
   void fetchPlaces() async {
-    var _placesIds = await Helpers.favouritePlaces();
+    _placesIds = await Helpers.favouritePlaces();
+
+    setState(() {});
 
     for (var placeId in _placesIds) {
       try {
-        var response = await Helpers.getPlace(placeId);
+        Place? response;
 
-        if (response == null) continue;
+        do {
+          response = await Helpers.getPlace(placeId);
+        } while (response == null && mounted);
 
-        _places.add(response);
+        _places.add(response!);
 
         setState(() {});
       } catch (e) {
@@ -56,16 +61,18 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Places favourites")),
-      body: ListView.separated(
-        itemBuilder: _placeEntryBuilder,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        separatorBuilder: (context, index) => const Divider(
-          height: 1,
-          color: Colors.white30,
-        ),
-        itemCount: _places.length + 1,
-      ),
+      appBar: AppBar(title: const Text("Places favourites")),
+      body: _placesIds.isEmpty
+          ? const Center(child: Text("Vous n'avez ajouté aucun lieu à cette liste"))
+          : ListView.separated(
+              itemBuilder: _placeEntryBuilder,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              separatorBuilder: (context, index) => const Divider(
+                height: 1,
+                color: Colors.white30,
+              ),
+              itemCount: _places.length + 1,
+            ),
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -96,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         break;
 
       case "/places/search":
-        screen = SearchPlaceScreen();
+        screen = const SearchPlaceScreen();
         break;
 
       case "/places/favourite":

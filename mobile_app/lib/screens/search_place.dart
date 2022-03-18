@@ -1,13 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:google_place/google_place.dart';
 import 'package:mobile_app/includes/constants.dart';
 import 'package:mobile_app/includes/helpers.dart';
-import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/models/place.dart';
-import 'package:mobile_app/services/location.dart';
-import 'package:provider/provider.dart';
 
 class SearchPlaceScreen extends StatefulWidget {
   const SearchPlaceScreen({Key? key}) : super(key: key);
@@ -18,6 +13,7 @@ class SearchPlaceScreen extends StatefulWidget {
 
 class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
   final TextEditingController _inputController = TextEditingController();
+  final FocusNode _inputFocusNode = FocusNode();
 
   final GooglePlace googlePlace = GooglePlace(Constants.GOOGLE_API_KEY);
 
@@ -27,6 +23,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
   @override
   void dispose() {
     _inputController.dispose();
+    _inputFocusNode.dispose();
     super.dispose();
   }
 
@@ -36,17 +33,12 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
       isLoading = true;
     });
 
-    var location = Provider.of<LocationService>(GlobalContextService.navigatorKey.currentContext!,
-        listen: false);
-
     var result = await googlePlace.search.getTextSearch(
       _inputController.value.text,
       language: "fr",
     );
 
     if (result == null || result.results == null) return;
-
-    inspect(result);
 
     for (var element in result.results!) {
       _places.add(
@@ -58,8 +50,6 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
           ),
         ),
       );
-
-      // _places = _places.unique((x) => x.info.placeId);
 
       setState(() {
         isLoading = false;
@@ -83,6 +73,13 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             child: TextField(
               controller: _inputController,
+              textInputAction: TextInputAction.search,
+              onEditingComplete: () {
+                onSearch();
+                _inputFocusNode.unfocus();
+              },
+              // maxLines: 1,
+              focusNode: _inputFocusNode,
               decoration: InputDecoration(
                 hintText: "Taper l'endroit que vous voulez chercher ...",
                 prefixIcon: const Icon(Icons.search),
@@ -93,10 +90,10 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
               ),
             ),
           ),
-          isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Flexible(
-                  child: ListView.separated(
+          Flexible(
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.separated(
                     itemBuilder: _placeEntryBuilder,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     separatorBuilder: (context, index) => const Divider(
@@ -105,7 +102,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
                     ),
                     itemCount: _places.length,
                   ),
-                ),
+          ),
         ],
       ),
     );

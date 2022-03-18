@@ -1,12 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_place/google_place.dart';
-import 'package:mobile_app/includes/constants.dart';
 import 'package:mobile_app/includes/helpers.dart';
 import 'package:mobile_app/models/place.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PlaceInfosScreen extends StatefulWidget {
   final String placeId;
@@ -29,8 +24,17 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
     fetchPlace();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   void fetchPlace() async {
-    _place = await Helpers.getPlace(widget.placeId);
+    do {
+      _place = await Helpers.getPlace(widget.placeId);
+    } while (_place == null && mounted);
 
     setState(() {});
   }
@@ -81,7 +85,10 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
                   ),
                   const SizedBox(height: 16),
                   _buildButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Share.share(
+                          'Je partage avec vous cet endroit: ${_place?.info.name} https://place.com/?id=${_place?.info.placeId}');
+                    },
                     icon: const Icon(Icons.share),
                     label: const Text("Partager"),
                   ),

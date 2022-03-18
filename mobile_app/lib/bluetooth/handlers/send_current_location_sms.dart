@@ -26,10 +26,10 @@ class SendCurrentLocationSMS implements BluetoothPayloadHandler {
 
     print("Send user current location: $message");
 
-    // telephony.sendSms(
-    //   to: "+212767265783",
-    //   // to: "+212653200413",
-    //   message: message,
-    // );
+    telephony.sendSms(
+      // to: "+212767265783",
+      to: "+212653200413",
+      message: message,
+    );
   }
 }

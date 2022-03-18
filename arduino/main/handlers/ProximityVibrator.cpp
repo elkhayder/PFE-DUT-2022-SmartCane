@@ -7,8 +7,8 @@ namespace ProximityVibrator
 {
     const int _VibratorPort = 5;
 
-    const int MIN_VIBRATION_VAL = 10;
-    const int MAX_VIBRATION_VAL = 255;
+    const int MIN_VIBRATION_VAL = 50;
+    const int MAX_VIBRATION_VAL = 254;
 
     const int SENSOR_THRESHOLD = 100;
 

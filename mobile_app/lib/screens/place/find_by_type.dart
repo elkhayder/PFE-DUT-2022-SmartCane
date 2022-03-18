@@ -28,11 +28,11 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
 
   // PolylinePoints polylinePoints = PolylinePoints();
 
+  bool isLoading = true;
+
   List<String?> nextPagesTokens = [];
 
   List<Place> _places = [];
-
-  List<String?> _searchTokens = [null];
 
   final directionsService = DirectionsService();
 
@@ -80,6 +80,10 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
       setState(() {});
     }
 
+    setState(() {
+      isLoading = false;
+    });
+
     for (var i = 0; i < _places.length; i++) {
       var place = _places.elementAt(i);
 
@@ -123,24 +127,26 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
       appBar: AppBar(
         title: Text(widget.type.label),
       ),
-      body: RefreshIndicator(
-        onRefresh: () {
-          setState(() {
-            _places = [];
-            _searchTokens = [null];
-          });
-          return getPlacesByTypesList();
-        },
-        child: ListView.separated(
-          itemBuilder: _placeEntryBuilder,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          separatorBuilder: (context, index) => const Divider(
-            height: 1,
-            color: Colors.white30,
-          ),
-          itemCount: _places.length,
-        ),
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: () {
+                setState(() {
+                  _places = [];
+                  isLoading = true;
+                });
+                return getPlacesByTypesList();
+              },
+              child: ListView.separated(
+                itemBuilder: _placeEntryBuilder,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                separatorBuilder: (context, index) => const Divider(
+                  height: 1,
+                  color: Colors.white30,
+                ),
+                itemCount: _places.length,
+              ),
+            ),
     );
   }
 
