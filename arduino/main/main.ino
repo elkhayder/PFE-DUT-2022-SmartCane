@@ -64,7 +64,7 @@ void onStart()
 
         int noteDuration = 1000 / noteDurations[thisNote];
 
-        tone(8, melody[thisNote], noteDuration);
+        tone(6, melody[thisNote], noteDuration);
 
         // to distinguish the notes, set a minimum time between them.
 
@@ -76,6 +76,6 @@ void onStart()
 
         // stop the tone playing:
 
-        noTone(8);
+        noTone(6);
     }
 }
