@@ -13,7 +13,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Paramètre")),
+      appBar: AppBar(title: const Text("Settings")),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,7 +27,7 @@ class _SettingScreenState extends State<SettingScreen> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: const Align(
-                child: Text("Contacts d'urgence"),
+                child: Text("Emergency contacts"),
                 alignment: Alignment.centerLeft,
               ),
             ),
@@ -44,7 +44,7 @@ class _SettingScreenState extends State<SettingScreen> {
       minLeadingWidth: 0,
       leading: const Padding(
         padding: EdgeInsets.only(top: 10),
-        child: Text("Thème"),
+        child: Text("Theme"),
       ),
       trailing: DropdownButton<ThemeMode>(
         value: theme.mode,
@@ -58,7 +58,7 @@ class _SettingScreenState extends State<SettingScreen> {
             value: ThemeMode.dark,
           ),
           DropdownMenuItem(
-            child: Text("Système"),
+            child: Text("System"),
             value: ThemeMode.system,
           ),
         ],

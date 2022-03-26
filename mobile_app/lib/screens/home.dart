@@ -114,8 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         _spacing,
         OutlinedButton(
-          onPressed: () {},
-          child: const Text("Où est ma SmartCane?"),
+          onPressed: () {
+            smartCane.send("RING", []);
+          },
+          child: const Text("Where is my SmartCane?"),
           style: _outlinedButtonStyle,
         ),
       ],

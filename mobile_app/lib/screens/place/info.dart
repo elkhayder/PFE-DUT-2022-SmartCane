@@ -51,7 +51,7 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var distance = _place == null
+    var distance = _place?.directions.walking == null
         ? 0.0
         : Helpers.calculateRouteDistance(_place!.directions.walking!.first.overviewPath!);
 

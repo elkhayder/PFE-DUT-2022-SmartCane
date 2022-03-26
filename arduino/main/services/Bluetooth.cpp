@@ -20,13 +20,11 @@ namespace Bluetooth
     bool isConnected = false;
 
     const int _handlersCount = 1;
+    const BluetoothHandler _handlers[] = {
+        RingHandler(),
+    };
 
-    // const BluetoothHandler _handlers[] = {
-    //     RingHandler(),
-    // };
-
-    void
-    send(String command, String args[], int length)
+    void send(String command, String args[], int length)
     {
         String payload = command + ":";
 
@@ -78,12 +76,15 @@ namespace Bluetooth
             DEBUGVAL(args[i]);
         }
 
-        // for (int i = 0; i < _handlersCount; i++)
-        // {
-        //     BluetoothHandler handler = _handlers[i];
-        //     if (handler.getCommand() == command)
-        //         handler.handle(args, argsLength);
-        // }
+        for (int i = 0; i < _handlersCount; i++)
+        {
+            BluetoothHandler handler = _handlers[i];
+            if (handler.getCommand() == command)
+            {
+                handler.handle(args, argsLength);
+                break;
+            }
+        }
     }
 
     void onConnect()
@@ -111,6 +112,7 @@ namespace Bluetooth
             int thisChar = BTSerial.read();
             if (thisChar == 0xA)
             {
+                Serial.println(_payloadBuffer);
                 parsePayload(_payloadBuffer); // Parse payload
                 _payloadBuffer = "";          // Reset payload buffer
             }

@@ -111,8 +111,10 @@ class _EmergencyContactsSettingsScreenState extends State<EmergencyContactsSetti
           const SizedBox(height: 24),
           OutlinedButton(
             onPressed: () async {
-              final FullContact contact = await FlutterContactPicker.pickFullContact();
-              addContact(contact);
+              try {
+                final FullContact contact = await FlutterContactPicker.pickFullContact();
+                addContact(contact);
+              } catch (e) {}
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,

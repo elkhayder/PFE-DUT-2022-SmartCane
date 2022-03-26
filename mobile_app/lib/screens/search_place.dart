@@ -66,7 +66,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Chercher un endroit")),
+      appBar: AppBar(title: const Text("Find places")),
       body: Column(
         children: [
           Padding(
@@ -81,7 +81,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
               // maxLines: 1,
               focusNode: _inputFocusNode,
               decoration: InputDecoration(
-                hintText: "Taper l'endroit que vous voulez chercher ...",
+                hintText: "Type the place you wanna search ...",
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.send),
@@ -135,9 +135,8 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
             const SizedBox(width: 8),
             Text(
               distanceInKm != null ? Helpers.formatDistanceString(distanceInKm, short: true) : "-",
-              semanticsLabel: distanceInKm != null
-                  ? "Distance à ${place.info.name} est ${Helpers.formatDistanceString(distanceInKm)}"
-                  : "La distance vers ${place.info.name} est en train d'être calculer",
+              semanticsLabel:
+                  "Distance to ${place.info.name} is ${distanceInKm != null ? Helpers.formatDistanceString(distanceInKm) : "being calculated"}",
             ),
           ],
         ),

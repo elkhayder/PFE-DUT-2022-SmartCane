@@ -144,12 +144,13 @@ class Helpers {
     double closestPointDistance = double.infinity;
     LatLng closestPoint = path[0];
 
-    for (var point in path) {
-      var d = SphericalUtil.computeDistanceBetween(position, point);
+    for (int i = 0; i < path.length - 1; i++) {
+      // var d = SphericalUtil.computeDistanceBetween(position, point);
+      var d = PolygonUtil.distanceToLine(position, path[i], path[i + 1]);
 
       if (d < closestPointDistance) {
         closestPointDistance = d.toDouble();
-        closestPoint = point;
+        closestPoint = path[i + 1];
       }
     }
 

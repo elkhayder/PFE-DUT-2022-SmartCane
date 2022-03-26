@@ -1,5 +1,9 @@
 #include <Arduino.h>
 
+#ifndef BUTTON_CPP
+
+#define BUTTON_CPP
+
 class Button
 {
 public:
@@ -42,12 +46,14 @@ public:
         _onDoublePress = onDoublePress;
         _onLongPress = onLongPress;
 
-        pinMode(port, INPUT);
+        pinMode(port, INPUT_PULLUP);
     }
 
     void listen()
     {
-        _currentState = (bool)digitalRead(_port);
+        _currentState = !(bool)digitalRead(_port);
+
+        // Serial.println(_currentState ? "On" : "Off");
 
         if (millis() < _lastPressedAt + minPressPolling)
             return;
@@ -87,3 +93,5 @@ public:
         _prevState = _currentState;
     }
 };
+
+#endif

@@ -16,7 +16,9 @@ void loop() {
 
  
   playPassed();
-    delay(1000);
+  delay
+    
+    
   
   
 }
@@ -33,9 +35,9 @@ void playPassed() { /* function playPassed */
 
 void playFailed() { /* function playFailed */
   ////Play 'OFF' Sound
-  int melodyOff[] = {NOTE_A6,NOTE_D7,NOTE_E7};
+  int melodyOff[] = {NOTE_C7,NOTE_E7};
   int durationOff = 250;
-  for (int thisNote = 0; thisNote < 3; thisNote++) {
+  for (int thisNote = 0; thisNote < 2; thisNote++) {
     tone(buzPin, melodyOff[thisNote], durationOff);
     delay(100);
    }}

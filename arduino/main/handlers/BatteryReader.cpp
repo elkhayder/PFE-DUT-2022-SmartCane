@@ -5,7 +5,9 @@
 
 namespace BatteryReader
 {
-    const int pin = A0;
+    const int batteryInputPin = A0;
+
+    const int ledOutputPin = A5;
 
     int _lastValue = 100;
 
@@ -13,6 +15,8 @@ namespace BatteryReader
 
     void onValueChange(int value)
     {
+        digitalWrite(ledOutputPin, value <= 20);
+
         String args[1] = {String(value)};
 
         Bluetooth::send("BATTERY_PERCENTAGE", args, 1);
@@ -20,13 +24,15 @@ namespace BatteryReader
 
     void setup()
     {
-        pinMode(pin, INPUT);
+        pinMode(batteryInputPin, INPUT);
+        pinMode(ledOutputPin, OUTPUT);
+
         onValueChange(_lastValue);
     }
 
     void loop()
     {
-        int _read = analogRead(pin);
+        int _read = analogRead(batteryInputPin);
 
         int _value = _read / 10.24; // 5 * 100 / 1024 = 0.48828125
 
