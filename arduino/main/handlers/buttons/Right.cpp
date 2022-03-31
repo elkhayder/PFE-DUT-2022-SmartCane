@@ -17,7 +17,7 @@ namespace RightButton
         Serial.println("Right: Long press");
     }
 
-    Button button(13, onPress, onDoublePress, onLongPress);
+    Button button(12, onPress, onDoublePress, onLongPress);
 
     void setup()
     {

@@ -19,7 +19,7 @@ namespace ProximityVibrator
     void onUpdate(double distance)
     {
         _val = max(MIN_VIBRATION_VAL + (SENSOR_THRESHOLD - distance) * (MAX_VIBRATION_VAL - MIN_VIBRATION_VAL) / (SENSOR_THRESHOLD - 2), 0);
-        Serial.println(distance);
+        // Serial.println(distance);
     }
 
     HC_SR04 sensor(8, 7, onUpdate); // Echo, Trig, onUpdate

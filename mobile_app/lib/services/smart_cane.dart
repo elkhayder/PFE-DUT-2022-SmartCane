@@ -21,7 +21,7 @@ class SmartCaneService extends ChangeNotifier {
   String _payloadBuffer = "";
 
   SmartCaneService() {
-    if (isConnected && _connection == null) {
+    if (_connection == null) {
       connect();
     }
   }
@@ -30,14 +30,18 @@ class SmartCaneService extends ChangeNotifier {
     // SMART CANE : 98:D3:33:81:3D:33
     const String address = "98:D3:33:81:3D:33";
     try {
-      print("Connecting to bluetooth device: $address");
+      // print("Connecting to bluetooth device: $address");
+
       _connection = await BluetoothConnection.toAddress(address);
-      print('Connected to the device');
+      // print('Connected to the device');
       isConnected = true;
       _connection?.input?.listen(_onRecievePayload);
     } catch (exception) {
       isConnected = false;
-      print("Failed connecting to bluetooth Device : $address");
+      // print("Failed connecting to bluetooth Device : $address");
+      await FlutterBluetoothSerial.instance.requestDisable();
+      await FlutterBluetoothSerial.instance.requestEnable();
+      connect();
     }
 
     notifyListeners();

@@ -1,3 +1,7 @@
+import 'package:mobile_app/includes/constants.dart';
+import 'package:mobile_app/includes/helpers.dart';
+import 'package:mobile_app/models/emergency_contact.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telephony/telephony.dart';
 import '../bluetooth_payload_handler.dart';
 
@@ -14,22 +18,34 @@ class SendCurrentLocationSMS implements BluetoothPayloadHandler {
   @override
   void handle(List<String> args) async {
     var currentLocation = await location.updateCurrentLocation();
+    var prefs = await SharedPreferences.getInstance();
 
-    String message = "Hey dude, I'm lost. Please call me.";
+    String message = prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage;
 
     if (currentLocation?.longitude != null && currentLocation?.latitude != null) {
-      String mapLink =
-          "https://www.google.com/maps/search/?api=1&query=${currentLocation!.latitude!.toString()}%2C${currentLocation.longitude!.toString()}";
-
-      message += " Here is my current location: $mapLink";
+      message +=
+          " https://www.google.com/maps/search/?api=1&query=${currentLocation!.latitude!.toString()}%2C${currentLocation.longitude!.toString()}";
     }
 
-    print("Send user current location: $message");
+    List<EmergencyContact> contacts = await Helpers.fetchEmergencyContacts();
 
-    telephony.sendSms(
-      // to: "+212767265783",
-      to: "+212653200413",
-      message: message,
+    if (contacts.isEmpty) {
+      await Helpers.speak(
+        "You don't have any emergency contacts, please add at least one in the settings menu.",
+      );
+      return;
+    }
+
+    for (var c in contacts) {
+      await telephony.sendSms(
+        // to: "+212767265783",
+        to: c.phone,
+        message: message,
+      );
+    }
+
+    await Helpers.speak(
+      "Location SMS sent to ${contacts.length} ${contacts.length == 1 ? "person" : "people"}",
     );
   }
 }

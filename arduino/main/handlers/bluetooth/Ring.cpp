@@ -4,19 +4,15 @@
 #include "./Handler.cpp"
 #include "../../includes/ringtones.cpp"
 
-class RingHandler : public BluetoothHandler
+namespace RingHandler
 {
-public:
-    String getCommand() override
+    void handle(String args[], int length)
     {
-        return "RING";
+        for (int i = 0; i < 10; i++)
+            Ringtones::ringtone.play();
     }
 
-    void handle(String args[], int length) override
-    {
-        Serial.print("ringing");
-        // startPlayback(Ringtone::ringtone, sizeof(Ringtone::ringtone));
-    }
-};
+    BluetoothHandler handler("RING", handle);
+}
 
 #endif

@@ -49,6 +49,8 @@ dependencies:
    fluttercontactpicker: ^4.6.0
    share_plus: ^3.1.0
    motion_sensors: ^0.1.0
+   android_intent_plus: ^3.1.1
+   flutter_tts: ^3.3.3
 
 dev_dependencies:
    flutter_test:

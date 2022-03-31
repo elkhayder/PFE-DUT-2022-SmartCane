@@ -4,12 +4,19 @@
 class BluetoothHandler
 {
 public:
-    virtual String getCommand()
+    //     virtual String getCommand();
+    String command;
+    void (*handle)(String[], int);
+
+    BluetoothHandler(
+        String _command,
+        void (*_handle)(String[], int))
     {
-        return "";
+        command = _command;
+        handle = _handle;
     }
 
-    virtual void handle(String args[], int argsLength){};
+    //     virtual void handle(String args[], int argsLength);
 };
 
 #endif

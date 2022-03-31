@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_app/includes/helpers.dart';
 import 'package:mobile_app/models/place.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:android_intent_plus/android_intent.dart';
 
 class PlaceInfosScreen extends StatefulWidget {
   final String placeId;
@@ -71,6 +74,8 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
                   ),
                   const SizedBox(height: 24),
                   ..._buildDirectionsOptions(context),
+                  const Divider(height: 4),
+                  const SizedBox(height: 16),
                   _buildButton(
                     onPressed: () async {
                       var placeId = _place!.info.placeId!;
@@ -81,16 +86,16 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
                       await checkIfInFavourite();
                     },
                     icon: Icon(_inFavourite ? Icons.bookmark_remove : Icons.bookmark_add),
-                    label: Text(_inFavourite ? "Retirer du favouries" : "Ajouter aux favouries"),
+                    label: Text(_inFavourite ? "Remove from saved places" : "Add to saved places"),
                   ),
                   const SizedBox(height: 16),
                   _buildButton(
                     onPressed: () {
                       Share.share(
-                          'Je partage avec vous cet endroit: ${_place?.info.name} https://place.com/?id=${_place?.info.placeId}');
+                          "'m sharing with you this place: ${_place?.info.name} https://place.com/?id=${_place?.info.placeId}");
                     },
                     icon: const Icon(Icons.share),
-                    label: const Text("Partager"),
+                    label: const Text("Share"),
                   ),
                 ],
               ),
@@ -119,46 +124,49 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
 
     List<List<dynamic>> temp = [];
 
-    if (_place!.directions.walking != null) {
+    if (_place?.directions.walking != null) {
       temp.add([
-        "À pied",
+        "Walking",
         Icons.directions_walk,
-        _place?.directions.walking,
+        "w", // Google maps for walking
       ]);
     }
 
-    if (_place!.directions.transit != null) {
-      temp.add([
-        "Transit",
-        Icons.directions_transit,
-        _place?.directions.transit,
-      ]);
-    }
+    // if (_place?.directions.transit != null) {
+    //   temp.add([
+    //     "Transit",
+    //     Icons.directions_transit,
+    //     "l", // Google maps for two-wheeler
+    //   ]);
+    // }
 
-    if (_place!.directions.bicycling != null) {
+    if (_place?.directions.bicycling != null) {
       temp.add([
         "Bicyclette",
         Icons.directions_bike,
-        _place?.directions.bicycling,
+        "b", // Google maps for bicycling
       ]);
     }
 
-    if (_place!.directions.driving != null) {
+    if (_place?.directions.driving != null) {
       temp.add([
-        "Voiture",
+        "Driving",
         Icons.directions_car,
-        _place?.directions.driving,
+        "d", // Google maps for driving
       ]);
     }
 
     for (var option in temp) {
       options.addAll([
         _buildButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/places/navigate", arguments: {
-              "place": _place!,
-              "directions": option[2].first,
-            });
+          onPressed: () async {
+            AndroidIntent intent = AndroidIntent(
+              action: 'action_view',
+              package: "com.google.android.apps.maps",
+              data:
+                  'google.navigation:q=${_place?.info.geometry?.location?.lat},${_place?.info.geometry?.location?.lng}&mode=${option[2]}',
+            );
+            await intent.launch();
           },
           icon: Icon(option[1]),
           label: Text(option[0]),

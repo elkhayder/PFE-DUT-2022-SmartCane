@@ -61,9 +61,9 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Places favourites")),
+      appBar: AppBar(title: const Text("Saved places")),
       body: _placesIds.isEmpty
-          ? const Center(child: Text("Vous n'avez ajouté aucun lieu à cette liste"))
+          ? const Center(child: Text("You don't have any place on this list yet"))
           : ListView.separated(
               itemBuilder: _placeEntryBuilder,
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -120,8 +120,8 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
             Text(
               distanceInKm != null ? Helpers.formatDistanceString(distanceInKm, short: true) : "-",
               semanticsLabel: distanceInKm != null
-                  ? "Distance à ${place.info.name} est ${Helpers.formatDistanceString(distanceInKm)}"
-                  : "La distance vers ${place.info.name} est en train d'être calculer",
+                  ? "Distance to ${place.info.name} is ${Helpers.formatDistanceString(distanceInKm)}"
+                  : "Distance to ${place.info.name} is being calculated",
             ),
           ],
         ),

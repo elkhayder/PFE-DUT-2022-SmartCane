@@ -1,5 +1,7 @@
 #include <Arduino.h>
 
+#include "../Watchdog.cpp"
+
 // TODO: Remove those
 #define DEBUG_OUT Serial
 #include <Arduino_Helpers.h>
@@ -7,9 +9,12 @@
 
 class HC_SR04
 {
+
 public:
     double threshold = 0;      // in cm
     unsigned long polling = 0; // in ms
+
+    Watchdog watchdog;
 
 private:
     int _echoPin;
@@ -38,10 +43,23 @@ public:
         pinMode(_echoPin, INPUT);
 
         digitalWrite(_trigPin, LOW);
+
+        watchdog.barkAfter = 50;
     }
 
     void listen()
     {
+
+        watchdog.watch();
+
+        if (watchdog.bark)
+        {
+            reset();
+            watchdog.feed();
+        }
+
+        // DEBUGVAL(_isTriggering, _triggeringStartedAt, _echoingStartedAt, _isEchoing);
+
         if (_isEchoing)
         {
             // bool _echoState = (bool)digitalRead(_echoPin);
@@ -60,6 +78,8 @@ public:
 
                 _isEchoing = false;
                 _echoingStartedAt = 0;
+
+                watchdog.feed();
 
                 _onUpdate(_distance);
             }
@@ -81,7 +101,13 @@ public:
                 // _echoingStartedAt = micros();
             }
         }
+    }
 
-        // DEBUGVAL(_isTriggering, _triggeringStartedAt, _isEchoing, _echoingStartedAt);
+    void reset()
+    {
+        _isTriggering = false;
+        _triggeringStartedAt = 0;
+        _isEchoing = false;
+        _echoingStartedAt = 0;
     }
 };

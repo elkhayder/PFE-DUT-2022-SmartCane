@@ -21,7 +21,7 @@ namespace LeftButton
         Serial.println("Left: Long press");
     }
 
-    Button button(12, onPress, onDoublePress, onLongPress);
+    Button button(6, onPress, onDoublePress, onLongPress);
 
     void setup()
     {

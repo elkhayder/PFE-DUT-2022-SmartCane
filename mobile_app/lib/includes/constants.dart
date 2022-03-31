@@ -2,4 +2,6 @@
 
 class Constants {
   static String GOOGLE_API_KEY = "AIzaSyBqJ0ixB7WeMXMdCHq57aDErVRPQK1HGt4";
+
+  static String defaultEmergencyMessage = "Hey dude, I'm lost. Please call me.";
 }

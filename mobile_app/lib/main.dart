@@ -111,12 +111,12 @@ class _MyAppState extends State<MyApp> {
         );
         break;
 
-      case "/places/navigate":
-        screen = NavigateScreen(
-          place: args?["place"],
-          directions: args?["directions"],
-        );
-        break;
+      // case "/places/navigate":
+      //   screen = NavigateScreen(
+      //     place: args?["place"],
+      //     directions: args?["directions"],
+      //   );
+      //   break;
 
       case "/places/info":
         screen = PlaceInfosScreen(
@@ -139,6 +139,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _errorScreen(RouteSettings settings) {
-    return Center(child: Text("Error: ${settings.name} not found"));
+    return Center(
+      child: Text("Error: ${settings.name} not found"),
+    );
   }
 }

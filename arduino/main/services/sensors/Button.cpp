@@ -4,6 +4,8 @@
 
 #define BUTTON_CPP
 
+#include "../../includes/ringtones.cpp"
+
 class Button
 {
 public:
@@ -64,7 +66,7 @@ public:
             {
                 if (millis() >= _lastPressedAt + longPressTriggerTimeout)
                 {
-                    _onLongPress();
+                    handleLongPress();
                     _singlePressInQueue = false;
                     _longPressInProgress = false;
                     _lastPressedAt = millis();
@@ -72,13 +74,13 @@ public:
             }
             else if (millis() <= _lastPressedAt + doublePressTimeout && _currentState && !_prevState)
             {
-                _onDoublePress();
+                handleDoublePress();
                 _singlePressInQueue = false;
                 _lastPressedAt = millis();
             }
             else if (millis() > _lastPressedAt + doublePressTimeout)
             {
-                _onPress();
+                handlePress();
                 _singlePressInQueue = false;
                 _lastPressedAt = millis();
             }
@@ -91,6 +93,25 @@ public:
         }
 
         _prevState = _currentState;
+    }
+
+private:
+    void handlePress()
+    {
+        Ringtones::buttonClick.play();
+        _onPress();
+    }
+
+    void handleDoublePress()
+    {
+        Ringtones::buttonDoubleClick.play();
+        _onDoublePress();
+    }
+
+    void handleLongPress()
+    {
+        Ringtones::buttonLongClick.play();
+        _onLongPress();
     }
 };
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
+import 'package:mobile_app/includes/helpers.dart';
 import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/includes/declarations.dart';
 import 'package:mobile_app/models/emergency_contact.dart';
@@ -20,13 +21,7 @@ class _EmergencyContactsSettingsScreenState extends State<EmergencyContactsSetti
   List<EmergencyContact> _contacts = [];
 
   void fetchSavedContacts() async {
-    var prefs = await SharedPreferences.getInstance();
-
-    // await prefs.remove("emergency_contacts");
-
-    for (var json in prefs.getStringList("emergency_contacts") ?? []) {
-      _contacts.add(EmergencyContact.fromJson(jsonDecode(json)));
-    }
+    _contacts = await Helpers.fetchEmergencyContacts();
 
     setState(() {});
   }

@@ -2,7 +2,7 @@
 #include "pitches.h" //https://www.arduino.cc/en/Tutorial/toneMelody
 
 //Parameters
-const int buzPin  = 2;
+const int buzPin  = 11;
 
 void setup() {
   //Init Serial USB

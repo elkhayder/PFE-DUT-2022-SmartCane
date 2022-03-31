@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/services/location.dart';
 import 'package:provider/provider.dart';
+import 'package:android_intent_plus/android_intent.dart';
 
 import '../services/smart_cane.dart';
 
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Text(
-              "Votre localisation actuelle est: $currentPosition",
+              "Your current location is: $currentPosition",
             ),
           ),
         ),
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         IconButton(
           onPressed: () => location.updateCurrentLocation(),
           icon: const Icon(Icons.gps_fixed),
-          tooltip: "Rafraîchir l'emplacement",
+          tooltip: "Refresh location",
         )
       ],
     );
@@ -81,10 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-            "SmartCane est ${smartCane.isConnected ? "connectée. Batterie ${smartCane.batteryPercentage}%" : "déconnecté"}"),
+          "SmartCane is ${smartCane.isConnected ? "connected. Battery level is ${smartCane.batteryPercentage}%" : "disconnected"}",
+        ),
         const SizedBox(height: 24),
         OutlinedButton(
-          child: Text("${smartCane.isConnected ? "Déconnecter" : "Connecter"} la SmartCane"),
+          child: Text("${smartCane.isConnected ? "Disc" : "C"}onnect SmartCane"),
           style: _outlinedButtonStyle,
           onPressed: smartCane.isConnected ? smartCane.disconnect : smartCane.connect,
         ),
@@ -93,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.of(context).pushNamed("/places/explore");
           },
-          child: const Text("Découvrir"),
+          child: const Text("Explore"),
           style: _outlinedButtonStyle,
         ),
         _spacing,
@@ -101,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.of(context).pushNamed("/places/search");
           },
-          child: const Text("Chercher un endroit"),
+          child: const Text("Search"),
           style: _outlinedButtonStyle,
         ),
         _spacing,
@@ -109,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             Navigator.of(context).pushNamed("/places/favourite");
           },
-          child: const Text("Mes endroits préférés"),
+          child: const Text("Saved places"),
           style: _outlinedButtonStyle,
         ),
         _spacing,

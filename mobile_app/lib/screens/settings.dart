@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/includes/constants.dart';
 import 'package:mobile_app/services/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -10,6 +12,15 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  late TextEditingController emergencyMessageController = TextEditingController();
+
+  @override
+  void dispose() {
+    emergencyMessageController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +29,25 @@ class _SettingScreenState extends State<SettingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _theme(context),
+          InkWell(
+            onTap: () async {
+              var prefs = await SharedPreferences.getInstance();
+              emergencyMessageController.text =
+                  prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage;
+              String? message = await showEmergencyMessagePopup();
+              await prefs.setString(
+                  "emergencyMessage", message ?? Constants.defaultEmergencyMessage);
+            },
+            child: Container(
+              height: 56,
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: const Align(
+                child: Text("Emergency message"),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+          ),
           InkWell(
             onTap: () {
               Navigator.of(context).pushNamed("/settings/emergency_contacts");
@@ -66,6 +96,28 @@ class _SettingScreenState extends State<SettingScreen> {
           if (value == null) return;
           theme.mode = value;
         },
+      ),
+    );
+  }
+
+  Future<String?> showEmergencyMessagePopup() {
+    return showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Emergency message"),
+        content: TextField(
+          decoration: const InputDecoration(hintText: "Emergency message"),
+          autofocus: true,
+          controller: emergencyMessageController,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(emergencyMessageController.text);
+            },
+            child: const Text("Confirm"),
+          )
+        ],
       ),
     );
   }

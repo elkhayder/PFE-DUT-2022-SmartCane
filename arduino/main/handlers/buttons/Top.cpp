@@ -14,7 +14,7 @@ namespace TopButton
 
     void onLongPress()
     {
-        Serial.println("Top: Long press");
+        Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
     }
 
     Button button(10, onPress, onDoublePress, onLongPress);

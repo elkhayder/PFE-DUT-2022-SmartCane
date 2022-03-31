@@ -5,6 +5,8 @@
    },
    "C_Cpp.errorSquiggles": "Enabled",
    "files.associations": {
-      "*.ipp": "cpp"
+      "*.ipp": "cpp",
+      "bitset": "cpp",
+      "optional": "cpp"
    }
 }

@@ -178,8 +178,8 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
             Text(
               distanceInKm != null ? Helpers.formatDistanceString(distanceInKm, short: true) : "-",
               semanticsLabel: distanceInKm != null
-                  ? "Distance à ${place.info.name} est ${Helpers.formatDistanceString(distanceInKm)}"
-                  : "La distance vers ${place.info.name} est en train d'être calculer",
+                  ? "Distance to ${place.info.name} is ${Helpers.formatDistanceString(distanceInKm)}"
+                  : "Distance to ${place.info.name} is being calculated",
             ),
           ],
         ),

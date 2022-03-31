@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:math';
 
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_directions_api/google_directions_api.dart';
 import 'package:google_place/google_place.dart';
 import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:mobile_app/includes/constants.dart';
 import 'package:mobile_app/includes/navigation.dart';
+import 'package:mobile_app/models/emergency_contact.dart';
 import 'package:mobile_app/models/place.dart';
 import 'package:mobile_app/services/location.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +41,7 @@ class Helpers {
     int multiplyBy = isMeters ? 1000 : 1;
 
     String output =
-        "${(distance * multiplyBy).toStringAsFixed(isMeters ? 0 : 2)}  ${isMeters ? "" : short ? "K" : "kilo"}${short ? "M" : "mètres"}";
+        "${(distance * multiplyBy).toStringAsFixed(isMeters ? 0 : 2)} ${isMeters ? "" : short ? "K" : "kilo"}${short ? "M" : "mètres"}";
 
     return output;
   }
@@ -75,7 +78,7 @@ class Helpers {
 
     var infoRequest = await googlePlace.details.get(
       placeId,
-      language: "fr",
+      // language: "fr",
     );
 
     if (infoRequest?.result == null) {
@@ -155,5 +158,25 @@ class Helpers {
     }
 
     return closestPoint;
+  }
+
+  static Future<List<EmergencyContact>> fetchEmergencyContacts() async {
+    List<EmergencyContact> contacts = [];
+
+    var prefs = await SharedPreferences.getInstance();
+
+    // await prefs.remove("emergency_contacts");
+
+    for (var json in prefs.getStringList("emergency_contacts") ?? []) {
+      contacts.add(EmergencyContact.fromJson(jsonDecode(json)));
+    }
+
+    return contacts;
+  }
+
+  static Future<void> speak(String sentence) async {
+    FlutterTts tts = FlutterTts();
+    await tts.setSpeechRate(0.4);
+    await tts.speak(sentence);
   }
 }

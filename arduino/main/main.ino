@@ -20,12 +20,7 @@ void setup()
 
     ButtonsAll::setup();
 
-    // Startup melody
-    for (int i = 0; i < Ringtone::startup_size; i++)
-    {
-        tone(11, Ringtone::startup_melody[i], Ringtone::startup_duration);
-        delay(150);
-    }
+    Ringtones::startup.play();
 
     delay(1000);
 }

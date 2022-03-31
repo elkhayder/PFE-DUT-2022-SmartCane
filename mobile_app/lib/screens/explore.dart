@@ -10,11 +10,11 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   final List<ExploreLocationType> _locationsTypes = [
-    ExploreLocationType(label: "Tous"),
-    ExploreLocationType(label: "Cafe et Restaurants", types: ["cafe", "restaurant"]),
-    ExploreLocationType(label: "Mosquées", types: ["mosque"]),
+    ExploreLocationType(label: "All"),
+    ExploreLocationType(label: "Cafes and Restaurants", types: ["cafe", "restaurant"]),
+    ExploreLocationType(label: "Mosques", types: ["mosque"]),
     ExploreLocationType(
-      label: "Magasins et services",
+      label: "Shops and services",
       types: [
         "bakery",
         "store",
@@ -28,12 +28,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
       ],
     ),
     ExploreLocationType(
-      label: "Art et loisir",
+      label: "Arts and hobbies",
       types: ["museum", "park", "night_club", "movie_theater"],
     ),
     ExploreLocationType(label: "Police", types: ["police"]),
     ExploreLocationType(
-      label: "Docteurs, Hôpital et Pharmacies",
+      label: "Doctors, Hospitals and Pharmacies",
       types: ["hospital", "doctor", "pharmacy", "dentist"],
     ),
   ];
@@ -42,7 +42,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Découvrir"),
+        title: const Text("Explore"),
       ),
       body: ListView.separated(
         itemBuilder: (context, index) {

@@ -1,7 +1,7 @@
 import 'package:mobile_app/bluetooth/handlers/start_phone_ringtone.dart';
 import 'package:mobile_app/bluetooth/handlers/update_cane_battery_percentage.dart';
-
-import 'handlers/send_current_location_sms.dart';
+import 'package:mobile_app/bluetooth/handlers/speak.dart';
+import 'package:mobile_app/bluetooth/handlers/send_current_location_sms.dart';
 
 abstract class BluetoothPayloadHandler {
   late String command;
@@ -10,6 +10,8 @@ abstract class BluetoothPayloadHandler {
 
 // COMMAND:ARG1|ARG2|ARG3|...|ARGx
 void parseBluetoothPayload(String payload) {
+  print(payload);
+
   final String command = payload.split(":").first;
 
   final List<String> args =
@@ -18,7 +20,8 @@ void parseBluetoothPayload(String payload) {
   final List<BluetoothPayloadHandler> _handlers = [
     SendCurrentLocationSMS(),
     UpdateCaneBatteryPercentage(),
-    StartPhoneRingtone()
+    StartPhoneRingtone(),
+    Speak(),
   ];
 
   for (var handler in _handlers) {

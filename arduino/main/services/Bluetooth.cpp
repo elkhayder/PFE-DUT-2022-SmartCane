@@ -21,7 +21,7 @@ namespace Bluetooth
 
     const int _handlersCount = 1;
     const BluetoothHandler _handlers[] = {
-        RingHandler(),
+        RingHandler::handler,
     };
 
     void send(String command, String args[], int length)
@@ -36,11 +36,14 @@ namespace Bluetooth
         }
         payload += ((char)0x0A); // Add \n char
 
+        Serial.print(payload);
         BTSerial.print(payload); // Send payload
     }
 
     void parsePayload(String payload)
     {
+        Serial.println(payload);
+
         int indexOfDoublePoints = payload.indexOf(":");
 
         String command = payload.substring(0, indexOfDoublePoints);
@@ -69,17 +72,10 @@ namespace Bluetooth
 
         } while (indexOfPipe != -1);
 
-        DEBUGVAL(command);
-
-        for (int i = 0; i < argsLength; i++)
-        {
-            DEBUGVAL(args[i]);
-        }
-
         for (int i = 0; i < _handlersCount; i++)
         {
             BluetoothHandler handler = _handlers[i];
-            if (handler.getCommand() == command)
+            if (handler.command == command)
             {
                 handler.handle(args, argsLength);
                 break;
@@ -112,7 +108,6 @@ namespace Bluetooth
             int thisChar = BTSerial.read();
             if (thisChar == 0xA)
             {
-                Serial.println(_payloadBuffer);
                 parsePayload(_payloadBuffer); // Parse payload
                 _payloadBuffer = "";          // Reset payload buffer
             }
@@ -123,6 +118,12 @@ namespace Bluetooth
         }
 
         isConnected = isConnectNow;
+    }
+
+    void speak(String sentence)
+    {
+        String args[1] = {sentence};
+        Bluetooth::send("SPEAK", args, 1);
     }
 
 }
