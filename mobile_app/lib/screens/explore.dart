@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/models/explore_location.dart';
+import 'package:mobile_app/services/navigatables.dart';
+import 'package:mobile_app/widgets/navigatable_element.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({Key? key}) : super(key: key);
@@ -10,6 +13,7 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   final List<ExploreLocationType> _locationsTypes = [
+    ExploreLocationType(label: ""),
     ExploreLocationType(label: "All"),
     ExploreLocationType(label: "Cafes and Restaurants", types: ["cafe", "restaurant"]),
     ExploreLocationType(label: "Mosques", types: ["mosque"]),
@@ -39,6 +43,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -48,21 +57,24 @@ class _ExploreScreenState extends State<ExploreScreen> {
         itemBuilder: (context, index) {
           var locationType = _locationsTypes.elementAt(index);
           return SizedBox(
-            height: 56,
-            child: OutlinedButton(
-              child: Text(locationType.label),
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  "/places/findByType",
-                  arguments: {
-                    "type": locationType,
-                  },
-                );
-              },
+            height: index == 0 ? 0 : 56,
+            child: NavigatableElement(
+              child: OutlinedButton(
+                child: Text(locationType.label),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    "/places/findByType",
+                    arguments: {
+                      "type": locationType,
+                    },
+                  );
+                },
+              ),
+              index: index,
             ),
           );
         },
-        separatorBuilder: (context, index) => const SizedBox(height: 16),
+        separatorBuilder: (context, index) => SizedBox(height: index == 0 ? 0 : 16),
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         itemCount: _locationsTypes.length,
       ),

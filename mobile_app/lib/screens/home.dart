@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/services/location.dart';
+import 'package:mobile_app/services/navigatables.dart';
+import 'package:mobile_app/widgets/navigatable_element.dart';
 import 'package:provider/provider.dart';
 import 'package:android_intent_plus/android_intent.dart';
 
@@ -13,9 +16,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<GlobalKey> _keys = List.generate(5, (index) => GlobalKey());
+
   @override
   void initState() {
     super.initState();
+    // Future.delayed(Duration.zero, () {
+    //   NavigatablesService.of(context).reset();
+    //   GlobalContextService.currentFocusScopeNode = FocusScope.of(context);
+    // });
   }
 
   @override
@@ -85,42 +94,62 @@ class _HomeScreenState extends State<HomeScreen> {
           "SmartCane is ${smartCane.isConnected ? "connected. Battery level is ${smartCane.batteryPercentage}%" : "disconnected"}",
         ),
         const SizedBox(height: 24),
-        OutlinedButton(
-          child: Text("${smartCane.isConnected ? "Disc" : "C"}onnect SmartCane"),
-          style: _outlinedButtonStyle,
-          onPressed: smartCane.isConnected ? smartCane.disconnect : smartCane.connect,
+        NavigatableElement(
+          child: OutlinedButton(
+            child: Text("${smartCane.isConnected ? "Disc" : "C"}onnect SmartCane"),
+            style: _outlinedButtonStyle,
+            onPressed: smartCane.isConnected ? smartCane.disconnect : smartCane.connect,
+          ),
+          index: 0,
+          key: _keys[0],
         ),
         _spacing,
-        OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/places/explore");
-          },
-          child: const Text("Explore"),
-          style: _outlinedButtonStyle,
+        NavigatableElement(
+          child: OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed("/places/explore");
+            },
+            child: const Text("Explore"),
+            style: _outlinedButtonStyle,
+          ),
+          index: 1,
+          key: _keys[1],
         ),
         _spacing,
-        OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/places/search");
-          },
-          child: const Text("Search"),
-          style: _outlinedButtonStyle,
+        NavigatableElement(
+          child: OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed("/places/search");
+            },
+            child: const Text("Search"),
+            style: _outlinedButtonStyle,
+          ),
+          index: 2,
+          key: _keys[2],
         ),
         _spacing,
-        OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/places/favourite");
-          },
-          child: const Text("Saved places"),
-          style: _outlinedButtonStyle,
+        NavigatableElement(
+          child: OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed("/places/favourite");
+            },
+            child: const Text("Saved places"),
+            style: _outlinedButtonStyle,
+          ),
+          index: 3,
+          key: _keys[3],
         ),
         _spacing,
-        OutlinedButton(
-          onPressed: () {
-            smartCane.send("RING", []);
-          },
-          child: const Text("Where is my SmartCane?"),
-          style: _outlinedButtonStyle,
+        NavigatableElement(
+          child: OutlinedButton(
+            onPressed: () {
+              smartCane.send("RING", []);
+            },
+            child: const Text("Where is my SmartCane?"),
+            style: _outlinedButtonStyle,
+          ),
+          index: 4,
+          key: _keys[4],
         ),
       ],
     );

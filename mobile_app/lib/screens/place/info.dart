@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/includes/helpers.dart';
 import 'package:mobile_app/models/place.dart';
+import 'package:mobile_app/widgets/navigatable_element.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:android_intent_plus/android_intent.dart';
 
@@ -17,6 +18,8 @@ class PlaceInfosScreen extends StatefulWidget {
 
 class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
   bool _inFavourite = false;
+
+  GlobalKey _addToFavouritesKey = GlobalKey();
 
   Place? _place;
 
@@ -58,6 +61,8 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
         ? 0.0
         : Helpers.calculateRouteDistance(_place!.directions.walking!.first.overviewPath!);
 
+    var directionsCount = _buildDirectionsOptions(context).whereType<NavigatableElement>().length;
+
     return Scaffold(
       appBar: AppBar(title: Text(_place?.info.name! ?? "Loading")),
       body: _place == null
@@ -73,29 +78,47 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
                     "${Helpers.formatDistanceString(distance)}, ${(distance * 1000 / 85).round()} minutes",
                   ),
                   const SizedBox(height: 24),
+                  NavigatableElement(
+                    index: 0,
+                    child: SizedBox(
+                      height: 0,
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        child: Container(),
+                      ),
+                    ),
+                  ),
                   ..._buildDirectionsOptions(context),
                   const Divider(height: 4),
                   const SizedBox(height: 16),
-                  _buildButton(
-                    onPressed: () async {
-                      var placeId = _place!.info.placeId!;
-                      _inFavourite
-                          ? await Helpers.removeFavouritePlace(placeId)
-                          : await Helpers.addFavouritePlace(placeId);
+                  NavigatableElement(
+                    key: _addToFavouritesKey,
+                    index: directionsCount + 1,
+                    child: _buildButton(
+                      onPressed: () async {
+                        var placeId = _place!.info.placeId!;
+                        _inFavourite
+                            ? await Helpers.removeFavouritePlace(placeId)
+                            : await Helpers.addFavouritePlace(placeId);
 
-                      await checkIfInFavourite();
-                    },
-                    icon: Icon(_inFavourite ? Icons.bookmark_remove : Icons.bookmark_add),
-                    label: Text(_inFavourite ? "Remove from saved places" : "Add to saved places"),
+                        await checkIfInFavourite();
+                      },
+                      icon: Icon(_inFavourite ? Icons.bookmark_remove : Icons.bookmark_add),
+                      label:
+                          Text(_inFavourite ? "Remove from saved places" : "Add to saved places"),
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  _buildButton(
-                    onPressed: () {
-                      Share.share(
-                          "'m sharing with you this place: ${_place?.info.name} https://place.com/?id=${_place?.info.placeId}");
-                    },
-                    icon: const Icon(Icons.share),
-                    label: const Text("Share"),
+                  NavigatableElement(
+                    index: directionsCount + 2,
+                    child: _buildButton(
+                      onPressed: () {
+                        Share.share(
+                            "I'm sharing with you this place: ${_place?.info.name} https://place.com/?id=${_place?.info.placeId}");
+                      },
+                      icon: const Icon(Icons.share),
+                      label: const Text("Share"),
+                    ),
                   ),
                 ],
               ),
@@ -158,18 +181,21 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
 
     for (var option in temp) {
       options.addAll([
-        _buildButton(
-          onPressed: () async {
-            AndroidIntent intent = AndroidIntent(
-              action: 'action_view',
-              package: "com.google.android.apps.maps",
-              data:
-                  'google.navigation:q=${_place?.info.geometry?.location?.lat},${_place?.info.geometry?.location?.lng}&mode=${option[2]}',
-            );
-            await intent.launch();
-          },
-          icon: Icon(option[1]),
-          label: Text(option[0]),
+        NavigatableElement(
+          index: temp.indexOf(option) + 1,
+          child: _buildButton(
+            onPressed: () async {
+              AndroidIntent intent = AndroidIntent(
+                action: 'action_view',
+                package: "com.google.android.apps.maps",
+                data:
+                    'google.navigation:q=${_place?.info.geometry?.location?.lat},${_place?.info.geometry?.location?.lng}&mode=${option[2]}',
+              );
+              await intent.launch();
+            },
+            icon: Icon(option[1]),
+            label: Text(option[0]),
+          ),
         ),
         const SizedBox(height: 16)
       ]);

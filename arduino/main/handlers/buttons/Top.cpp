@@ -1,20 +1,25 @@
 #include "../../services/sensors/Button.cpp"
 
+#include "../../services/Bluetooth.cpp"
+
 namespace TopButton
 {
     void onPress()
     {
-        Serial.println("Top: On click");
+        String args[] = {"BACK"};
+
+        Bluetooth::send("NAVIGATABLES", args, 1);
     }
 
     void onDoublePress()
     {
-        Serial.println("Top: Double press");
     }
 
     void onLongPress()
     {
-        Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
+        String args[] = {"RESET"};
+
+        Bluetooth::send("NAVIGATABLES", args, 1);
     }
 
     Button button(10, onPress, onDoublePress, onLongPress);

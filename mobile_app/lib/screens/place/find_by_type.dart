@@ -9,6 +9,8 @@ import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/models/explore_location.dart';
 import 'package:mobile_app/models/place.dart';
 import 'package:mobile_app/services/location.dart';
+import 'package:mobile_app/widgets/navigatable_element.dart';
+import 'package:mobile_app/widgets/single_search_result.dart';
 import 'package:provider/provider.dart';
 import 'package:google_place/google_place.dart';
 // import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -77,19 +79,23 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
 
       _places = _places.unique((x) => x.info.placeId);
 
-      setState(() {});
+      // setState(() {});
+    }
+
+    // setState(() {
+    //   isLoading = false;
+    // });
+
+    for (var i = 0; i < _places.length; i++) {
+      var place = _places.elementAt(i);
+
+      // _places[i].directions.walking = await Helpers.getDirections(destination: place);
+      // setState(() {});
     }
 
     setState(() {
       isLoading = false;
     });
-
-    for (var i = 0; i < _places.length; i++) {
-      var place = _places.elementAt(i);
-
-      _places[i].directions.walking = await Helpers.getDirections(destination: place);
-      setState(() {});
-    }
   }
 
   Future<List<SearchResult>?> searchNearbyPlaces(String? type) async {
@@ -138,7 +144,34 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
                 return getPlacesByTypesList();
               },
               child: ListView.separated(
-                itemBuilder: _placeEntryBuilder,
+                itemBuilder: (_, index) {
+                  if (index == 0) {
+                    return NavigatableElement(
+                      child: SizedBox(
+                        height: 0,
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          child: Container(),
+                        ),
+                      ),
+                      index: index,
+                    );
+                  }
+                  var place = _places.elementAt(index);
+                  return NavigatableElement(
+                    key: ValueKey(place.info.placeId),
+                    index: index,
+                    child: SingleSearchResult(
+                      place: place,
+                      distance: Helpers.distanceTo(
+                        GeoCoord(
+                          place.info.geometry!.location!.lat!,
+                          place.info.geometry!.location!.lng!,
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 separatorBuilder: (context, index) => const Divider(
                   height: 1,
@@ -147,43 +180,6 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
                 itemCount: _places.length,
               ),
             ),
-    );
-  }
-
-  Widget _placeEntryBuilder(context, index) {
-    var place = _places.elementAt(index);
-    var distanceInKm = place.directions.walking?.first.overviewPath != null
-        ? Helpers.calculateRouteDistance(place.directions.walking!.first.overviewPath!)
-        : null;
-
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          "/places/info",
-          arguments: {"placeId": place.info.placeId},
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                place.info.name ?? "Unnamed",
-                style: const TextStyle(height: 1.2),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              distanceInKm != null ? Helpers.formatDistanceString(distanceInKm, short: true) : "-",
-              semanticsLabel: distanceInKm != null
-                  ? "Distance to ${place.info.name} is ${Helpers.formatDistanceString(distanceInKm)}"
-                  : "Distance to ${place.info.name} is being calculated",
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

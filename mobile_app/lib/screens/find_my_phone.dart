@@ -9,10 +9,15 @@ class FindMyPhoneScreen extends StatefulWidget {
 }
 
 class _FindMyPhoneScreenState extends State<FindMyPhoneScreen> {
+  FocusNode buttonNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
     FlutterRingtonePlayer.playRingtone(volume: 1);
+    Future.delayed(Duration(seconds: 2), () {
+      FocusScope.of(context).requestFocus(buttonNode);
+    });
   }
 
   @override
@@ -30,6 +35,8 @@ class _FindMyPhoneScreenState extends State<FindMyPhoneScreen> {
           const Text("Ringing"),
           const SizedBox(height: 24),
           OutlinedButton(
+            autofocus: true,
+            focusNode: buttonNode,
             onPressed: () {
               Navigator.of(context).pop();
             },

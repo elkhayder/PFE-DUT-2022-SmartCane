@@ -17,13 +17,13 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     Screen(
       activeIcon: Icons.navigation,
       inactiveIcon: Icons.navigation_outlined,
-      label: "Accueil",
+      label: "Home",
       screen: const HomeScreen(),
     ),
     Screen(
       activeIcon: Icons.settings,
       inactiveIcon: Icons.settings_outlined,
-      label: "Paramètre",
+      label: "Settings",
       screen: const SettingScreen(),
     ),
   ];

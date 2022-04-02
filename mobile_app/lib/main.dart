@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,9 +6,9 @@ import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/screens/favourites_places.dart';
 import 'package:mobile_app/screens/place/find_by_type.dart';
 import 'package:mobile_app/screens/place/info.dart';
-import 'package:mobile_app/screens/place/navigate.dart';
 import 'package:mobile_app/screens/search_place.dart';
 import 'package:mobile_app/screens/settings/emergency_contacts.dart';
+import 'package:mobile_app/services/navigatables.dart';
 import 'package:mobile_app/services/smart_cane.dart';
 import 'package:mobile_app/services/location.dart';
 import 'package:mobile_app/services/theme.dart';
@@ -27,6 +25,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => LocationService()),
         ChangeNotifierProvider(create: (_) => SmartCaneService()),
         ChangeNotifierProvider(create: (_) => ThemeService()),
+        ChangeNotifierProvider(create: (_) => NavigatablesService()),
       ],
       child: const MyApp(),
     ),
@@ -59,7 +58,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Smart Cane',
       debugShowCheckedModeBanner: false,
-      navigatorKey: GlobalContextService.navigatorKey, // set property
+      navigatorKey: GlobalContextService.navigatorKey,
       // showSemanticsDebugger: true,
       themeMode: theme.mode,
       darkTheme: ThemeData.dark().copyWith(
@@ -130,11 +129,19 @@ class _MyAppState extends State<MyApp> {
     }
 
     return MaterialPageRoute(
-      builder: (_) => SafeArea(
-        child: Scaffold(
-          body: screen ?? _errorScreen(settings),
-        ),
-      ),
+      builder: (_) {
+        Future.delayed(Duration.zero, () async {
+          NavigatablesService.of(context).currentlyFocusedIndex = null;
+          GlobalContextService.currentRouteContext = context;
+        });
+        return SafeArea(
+          child: Scaffold(
+            body: Builder(builder: (context) {
+              return screen ?? _errorScreen(settings);
+            }),
+          ),
+        );
+      },
     );
   }
 

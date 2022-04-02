@@ -6,9 +6,9 @@ namespace LeftButton
 {
     void onPress()
     {
-        Serial.println("Left: On click");
+        String args[] = {"PREVIOUS"};
 
-        // Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
+        Bluetooth::send("NAVIGATABLES", args, 1);
     }
 
     void onDoublePress()

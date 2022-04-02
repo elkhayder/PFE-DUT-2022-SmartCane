@@ -46,6 +46,16 @@ class Helpers {
     return output;
   }
 
+  static double distanceTo(GeoCoord to) {
+    var location = Provider.of<LocationService>(GlobalContextService.navigatorKey.currentContext!,
+        listen: false);
+
+    return calculateTwoPointsDistance(
+      to,
+      GeoCoord(location.currentLocation!.latitude!, location.currentLocation!.longitude!),
+    );
+  }
+
   static Future<List<String>> favouritePlaces() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -176,6 +186,7 @@ class Helpers {
 
   static Future<void> speak(String sentence) async {
     FlutterTts tts = FlutterTts();
+    await tts.setVolume(1);
     await tts.setSpeechRate(0.4);
     await tts.speak(sentence);
   }

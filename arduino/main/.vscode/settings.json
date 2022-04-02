@@ -8,5 +8,6 @@
       "*.ipp": "cpp",
       "bitset": "cpp",
       "optional": "cpp"
-   }
+   },
+   "cSpell.words": ["NAVIGATABLES"]
 }

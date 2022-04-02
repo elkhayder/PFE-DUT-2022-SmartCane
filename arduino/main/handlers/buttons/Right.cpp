@@ -4,7 +4,9 @@ namespace RightButton
 {
     void onPress()
     {
-        Serial.println("Right: On click");
+        String args[] = {"NEXT"};
+
+        Bluetooth::send("NAVIGATABLES", args, 1);
     }
 
     void onDoublePress()
@@ -14,7 +16,7 @@ namespace RightButton
 
     void onLongPress()
     {
-        Serial.println("Right: Long press");
+        Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
     }
 
     Button button(12, onPress, onDoublePress, onLongPress);

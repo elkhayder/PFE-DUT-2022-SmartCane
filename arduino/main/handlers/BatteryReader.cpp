@@ -17,6 +17,12 @@ namespace BatteryReader
     {
         digitalWrite(ledOutputPin, value <= 20);
 
+        if (value <= 20)
+        {
+            String batteryValue = value + "%";
+            Bluetooth::speak("Battery is low, " + batteryValue);
+        }
+
         String args[1] = {String(value)};
 
         Bluetooth::send("BATTERY_PERCENTAGE", args, 1);

@@ -1,3 +1,4 @@
+import 'package:mobile_app/bluetooth/handlers/navigatables.dart';
 import 'package:mobile_app/bluetooth/handlers/start_phone_ringtone.dart';
 import 'package:mobile_app/bluetooth/handlers/update_cane_battery_percentage.dart';
 import 'package:mobile_app/bluetooth/handlers/speak.dart';
@@ -22,6 +23,7 @@ void parseBluetoothPayload(String payload) {
     UpdateCaneBatteryPercentage(),
     StartPhoneRingtone(),
     Speak(),
+    NavigatablesRemote(),
   ];
 
   for (var handler in _handlers) {

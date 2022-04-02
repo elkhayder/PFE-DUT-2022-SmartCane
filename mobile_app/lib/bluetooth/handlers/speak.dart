@@ -1,4 +1,3 @@
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:mobile_app/bluetooth/bluetooth_payload_handler.dart';
 import 'package:mobile_app/includes/helpers.dart';
 

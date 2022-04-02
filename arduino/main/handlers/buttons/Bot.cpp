@@ -1,20 +1,22 @@
 #include "../../services/sensors/Button.cpp"
 
+#include "../../services/Bluetooth.cpp"
 namespace BottomButton
 {
     void onPress()
     {
-        Serial.println("Bot: On click");
+        String args[] = {"PRESS"};
+
+        Bluetooth::send("NAVIGATABLES", args, 1);
     }
 
     void onDoublePress()
     {
-        Serial.println("Bot: Double press");
     }
 
     void onLongPress()
     {
-        Serial.println("Bot: Long press");
+        Bluetooth::send("RING", {}, 0);
     }
 
     Button button(9, onPress, onDoublePress, onLongPress);
