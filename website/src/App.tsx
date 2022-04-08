@@ -62,7 +62,7 @@ const App = () => {
          location: request.result.geometry.location,
       });
 
-      console.log(place);
+      document.title = `${request.result.name} — GuideMe`;
    };
 
    return (
