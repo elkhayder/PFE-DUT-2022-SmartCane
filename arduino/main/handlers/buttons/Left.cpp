@@ -18,7 +18,7 @@ namespace LeftButton
 
     void onLongPress()
     {
-        Serial.println("Left: Long press");
+        Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
     }
 
     Button button(6, onPress, onDoublePress, onLongPress);

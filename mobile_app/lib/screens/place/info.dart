@@ -114,7 +114,7 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
                     child: _buildButton(
                       onPressed: () {
                         Share.share(
-                            "I'm sharing with you this place: ${_place?.info.name} https://place.com/?id=${_place?.info.placeId}");
+                            "Hey, check this place out: https://guideme.elkhayder.me/place?id=${_place?.info.placeId}");
                       },
                       icon: const Icon(Icons.share),
                       label: const Text("Share"),

@@ -1,5 +1,7 @@
 #include "../../services/sensors/Button.cpp"
 
+#include "../../services/Bluetooth.cpp"
+
 namespace RightButton
 {
     void onPress()
@@ -16,7 +18,9 @@ namespace RightButton
 
     void onLongPress()
     {
-        Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
+        String args[] = {"EXPLORE"};
+
+        Bluetooth::send("NAVIGATABLES", args, 1);
     }
 
     Button button(12, onPress, onDoublePress, onLongPress);

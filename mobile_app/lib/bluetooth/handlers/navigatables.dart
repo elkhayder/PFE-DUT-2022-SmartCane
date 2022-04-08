@@ -39,6 +39,10 @@ class NavigatablesRemote implements BluetoothPayloadHandler {
       case "RESET":
         navigatables.reset();
         break;
+
+      case "EXPLORE":
+        GlobalContextService.navigatorKey.currentState?.pushNamed("/places/explore");
+        break;
     }
     // FocusScope.of(context).nextFocus();
   }

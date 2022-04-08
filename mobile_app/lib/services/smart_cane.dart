@@ -39,9 +39,9 @@ class SmartCaneService extends ChangeNotifier {
     } catch (exception) {
       isConnected = false;
       // print("Failed connecting to bluetooth Device : $address");
-      await FlutterBluetoothSerial.instance.requestDisable();
-      await FlutterBluetoothSerial.instance.requestEnable();
-      connect();
+      // await FlutterBluetoothSerial.instance.requestDisable();
+      // await FlutterBluetoothSerial.instance.requestEnable();
+      // connect();
     }
 
     notifyListeners();

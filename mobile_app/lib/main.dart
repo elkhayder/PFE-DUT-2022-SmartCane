@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:mobile_app/screens/bottom_navigation_bar.dart';
 import 'package:mobile_app/screens/explore.dart';
 import 'package:mobile_app/screens/find_my_phone.dart';
+import 'package:uni_links/uni_links.dart';
 
 void main() {
   runApp(
@@ -42,6 +45,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late StreamSubscription _unilinkStreamSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +54,39 @@ class _MyAppState extends State<MyApp> {
     if (Platform.isAndroid) {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
+
+    initUniLinks();
+  }
+
+  Future<void> initUniLinks() async {
+    try {
+      parseUnilinkURI(await getInitialUri());
+    } catch (e) {
+      //
+    }
+
+    _unilinkStreamSubscription = uriLinkStream.listen(parseUnilinkURI, onError: (err) {});
+  }
+
+  void parseUnilinkURI(Uri? uri) {
+    inspect(uri);
+
+    if (uri == null) return;
+
+    String? id = uri.queryParameters["id"];
+
+    if (id == null) return;
+
+    GlobalContextService.navigatorKey.currentState
+        ?.pushNamed("/places/info", arguments: {"placeId": id});
+
+    inspect(GlobalContextService.navigatorKey.currentState);
+  }
+
+  @override
+  void dispose() {
+    _unilinkStreamSubscription.cancel();
+    super.dispose();
   }
 
   @override

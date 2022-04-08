@@ -56,7 +56,8 @@ class NavigatablesService extends ChangeNotifier {
     try {
       NavigatableElement element = elements.elementAt(index).last;
       FocusNode node = element.focusNode;
-      node.nearestScope?.requestFocus(node);
+      GlobalContextService.navigatorKey.currentState?.focusScopeNode.requestFocus(node);
+      // node.nearestScope?.requestFocus(node);
       node.nextFocus();
     } catch (error) {
       inspect(error);

@@ -61,7 +61,36 @@ class _SettingScreenState extends State<SettingScreen> {
                 alignment: Alignment.centerLeft,
               ),
             ),
-          )
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Divider(),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: RichText(
+              text: const TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Made with ",
+                  ),
+                  WidgetSpan(
+                    child: Icon(Icons.favorite, size: 14),
+                  ),
+                  TextSpan(
+                    text: " and ",
+                  ),
+                  WidgetSpan(
+                    child: Icon(Icons.coffee, size: 14),
+                  ),
+                  TextSpan(
+                    text: " by EL KHAYDER and OUCHATO",
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
