@@ -36,7 +36,7 @@ namespace Bluetooth
         }
         payload += ((char)0x0A); // Add \n char
 
-        Serial.print(payload);
+        // Serial.print(payload);
         BTSerial.print(payload); // Send payload
     }
 

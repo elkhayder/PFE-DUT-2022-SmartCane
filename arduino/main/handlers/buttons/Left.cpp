@@ -21,7 +21,7 @@ namespace LeftButton
         Bluetooth::send("SEND_LOCATION_SMS", {}, 0);
     }
 
-    Button button(6, onPress, onDoublePress, onLongPress);
+    Button button(9, onPress, onDoublePress, onLongPress);
 
     void setup()
     {

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/bluetooth/bluetooth_payload_handler.dart';
 import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/services/navigatables.dart';
+import 'package:mobile_app/services/smart_cane.dart';
+import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 class NavigatablesRemote implements BluetoothPayloadHandler {
   @override
@@ -15,6 +18,7 @@ class NavigatablesRemote implements BluetoothPayloadHandler {
     if (context == null) return;
 
     var navigatables = NavigatablesService.of(context);
+    var cane = Provider.of<SmartCaneService>(context, listen: false);
 
     switch (args[0]) {
       case "NEXT":
@@ -38,6 +42,8 @@ class NavigatablesRemote implements BluetoothPayloadHandler {
 
       case "RESET":
         navigatables.reset();
+        cane.disconnect();
+        Restart.restartApp();
         break;
 
       case "EXPLORE":

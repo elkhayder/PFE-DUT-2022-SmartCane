@@ -52,6 +52,7 @@ dependencies:
    android_intent_plus: ^3.1.1
    flutter_tts: ^3.3.3
    uni_links: ^0.5.1
+   restart_app: ^1.1.0
 
 dev_dependencies:
    flutter_test:

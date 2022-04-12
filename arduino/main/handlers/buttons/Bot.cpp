@@ -19,7 +19,7 @@ namespace BottomButton
         Bluetooth::send("RING", {}, 0);
     }
 
-    Button button(9, onPress, onDoublePress, onLongPress);
+    Button button(6, onPress, onDoublePress, onLongPress);
 
     void setup()
     {

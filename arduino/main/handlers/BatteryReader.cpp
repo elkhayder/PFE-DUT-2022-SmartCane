@@ -7,7 +7,7 @@ namespace BatteryReader
 {
     const int batteryInputPin = A0;
 
-    const int ledOutputPin = A5;
+    const int ledOutputPin = A2;
 
     int _lastValue = 100;
 
@@ -19,7 +19,7 @@ namespace BatteryReader
 
         if (value <= 20)
         {
-            String batteryValue = value + "%";
+            String batteryValue = String(value) + "%";
             Bluetooth::speak("Battery is low, " + batteryValue);
         }
 

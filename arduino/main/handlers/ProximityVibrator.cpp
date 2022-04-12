@@ -14,12 +14,13 @@ namespace ProximityVibrator
 
     const int VIBRATION_TIMOUT = 200;
 
-    double _val = 0;
-
     void onUpdate(double distance)
     {
-        _val = max(MIN_VIBRATION_VAL + (SENSOR_THRESHOLD - distance) * (MAX_VIBRATION_VAL - MIN_VIBRATION_VAL) / (SENSOR_THRESHOLD - 2), 0);
-        // Serial.println(distance);
+        int _val = max(MIN_VIBRATION_VAL + (SENSOR_THRESHOLD - distance) * (MAX_VIBRATION_VAL - MIN_VIBRATION_VAL) / (SENSOR_THRESHOLD - 2), 0);
+        if (_val < MIN_VIBRATION_VAL)
+            _val = 0;
+        analogWrite(_VibratorPort, _val);
+        Serial.println(distance);
     }
 
     HC_SR04 sensor(8, 7, onUpdate); // Echo, Trig, onUpdate
@@ -33,7 +34,6 @@ namespace ProximityVibrator
     void loop()
     {
         sensor.listen();
-        analogWrite(_VibratorPort, _val);
     }
 }
 
