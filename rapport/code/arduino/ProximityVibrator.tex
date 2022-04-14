@@ -1,0 +1,31 @@
+\begin{code}
+\begin{minted}[frame=single, framesep=3mm, linenos=true, xleftmargin=21pt, tabsize=4, fontsize=\small, breaklines]{cpp}
+namespace ProximityVibrator {
+    const int _VibratorPort = 5;
+
+    const int MIN_VIBRATION_VAL = 50;
+    const int MAX_VIBRATION_VAL = 255;
+
+    const int SENSOR_THRESHOLD = 100;
+
+    void onUpdate(double distance) {
+        int _val = max(MIN_VIBRATION_VAL + (SENSOR_THRESHOLD - distance) * (MAX_VIBRATION_VAL - MIN_VIBRATION_VAL) / (SENSOR_THRESHOLD - 2), 0);
+        if (_val < MIN_VIBRATION_VAL)
+            _val = 0;
+        analogWrite(_VibratorPort, _val);
+    }
+
+    HC_SR04 sensor(8, 7, onUpdate); // Echo, Trig, onUpdate
+
+    void setup() {
+        pinMode(_VibratorPort, OUTPUT);
+        sensor.threshold = SENSOR_THRESHOLD;
+    }
+
+    void loop() {
+        sensor.listen();
+    }
+}
+\end{minted}
+\caption{Vibreur}
+\end{code}

@@ -1,15 +1,11 @@
-import 'package:mobile_app/includes/constants.dart';
-import 'package:mobile_app/includes/helpers.dart';
-import 'package:mobile_app/models/emergency_contact.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:telephony/telephony.dart';
-import '../bluetooth_payload_handler.dart';
-
-import 'package:mobile_app/services/location.dart';
-
+\begin{code}
+\begin{minted}[frame=single,
+               framesep=3mm,
+               linenos=true,
+               xleftmargin=21pt,
+               tabsize=4, fontsize=\small, breaklines]{dart}
 class SendCurrentLocationSMS implements BluetoothPayloadHandler {
   final Telephony telephony = Telephony.instance;
-
   final LocationService location = LocationService();
 
   @override
@@ -19,15 +15,13 @@ class SendCurrentLocationSMS implements BluetoothPayloadHandler {
   void handle(List<String> args) async {
     var currentLocation = await location.updateCurrentLocation();
     var prefs = await SharedPreferences.getInstance();
-
     String message = prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage;
+    List<EmergencyContact> contacts = await Helpers.fetchEmergencyContacts();
 
     if (currentLocation?.longitude != null && currentLocation?.latitude != null) {
-      message +=
-          " https://www.google.com/maps/search/?api=1&query=${currentLocation!.latitude!.toString()}%2C${currentLocation.longitude!.toString()}";
+      message += "https://www.google.com/maps/search/?api=1&query=${currentLocation
+      !.latitude!.toString()}%2C${currentLocation.longitude!.toString()}";
     }
-
-    List<EmergencyContact> contacts = await Helpers.fetchEmergencyContacts();
 
     if (contacts.isEmpty) {
       await Helpers.speak(
@@ -48,3 +42,6 @@ class SendCurrentLocationSMS implements BluetoothPayloadHandler {
     );
   }
 }
+\end{minted}
+\caption{Expéditeur d'SMS d'urgence}
+\end{code}

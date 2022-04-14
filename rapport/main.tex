@@ -1,0 +1,137 @@
+\documentclass[pdftex, 12pt, a4paper]{report}
+\usepackage{newtxtext, newtxmath}
+\usepackage[top=1.5cm, bottom=2.5cm, left=2.5cm, right=1.5cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[sorting=none]{biblatex}
+\usepackage[colorinlistoftodos]{todonotes} % For todo's formatting
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage{glossaries}
+% \documentclass[parskip]{scrreprt}
+% \setlength\parskip{-40pt}
+% \renewcommand*\chapterheadendvskip{\vspace{-\normalbaselineskip}} 
+\usepackage{tgbonum}
+\usepackage{indentfirst}
+\usepackage{array}
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listing}
+\usepackage{minted}
+\usepackage{xcolor}
+% \usepackage{subfig}
+
+\addbibresource{bib.bib}
+\setstretch{1.5}
+\setlength{\cftfigindent}{0pt}
+\setlength{\cfttabindent}{0pt}
+\renewcommand{\cftdotsep}{1}
+\makeglossaries
+
+% Change Chapter title format
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries\sffamily}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries\sffamily}
+% Change Sections title format
+\titleformat*{\section}{\Large\bfseries\sffamily}
+\titleformat*{\subsection}{\large\bfseries\sffamily}
+\titleformat*{\subsubsection}{\bfseries\sffamily}
+\titleformat*{\paragraph}{\small\bfseries\sffamily}
+% Change font to Latin Modern Sans Serif
+
+% \DeclareCaptionType{code}[Code Listing][List of Code Listings]
+
+\newenvironment{code}{\vspace{0.5cm}\captionsetup{type=listing}}{}
+
+\renewcommand\listingscaption{Code}
+\renewcommand\listlistingname{Liste des Codes Sources}
+
+\usemintedstyle{xcode}
+
+\newcolumntype{C}[1]{ >{\centering\arraybackslash} m{#1} }
+
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
+
+\begin{document}
+\fontfamily{lmss}\selectfont %https://www.overleaf.com/learn/latex/Font_typefaces
+
+
+% Acronymes
+\newacronym{estc}{ESTC}{L’École supérieure de technologie de Casablanca}
+\newacronym{who}{WHO}{L’organisation Mondiale de la Santé}
+\newacronym{PWM}{PWM}{Pulse Width Modulation}
+\newacronym{DAC}{DAC}{Digital/Analog Converter}
+\newacronym{RAM}{RAM}{Random Access Memory}
+\newacronym{SDK}{SDK}{Software Development Kit}
+\newacronym{IDE}{IDE}{Integrated Development Environment}
+\newacronym{PCB}{PCB}{Printed Circuit Board}
+\newacronym{GPS}{GPS}{Global Positioning System}
+\newacronym{HTTP}{HTTP}{Hypertext Transfer Protocol}
+\newacronym{API}{API}{Application Programming Interface}
+\newacronym{JSON}{JSON}{JavaScript Object Notation}
+\newacronym{ASCII}{ASCII}{American Standard Code for Information Interchange}
+\newacronym{LED}{LED}{Light-emitting diode}
+\newacronym{OOP}{OOP}{Object Oriented Programming}
+% \asterisk
+\input{titlepage.tex}
+
+% Made with latex
+\pagenumbering{gobble}
+\pagebreak
+\null
+\vfill
+\begin{center}
+    \small{Made with \LaTeX}
+\end{center}
+\pagebreak
+
+\setcounter{page}{1}
+\pagenumbering{Roman}
+% For subsubsections and paragraphes counter
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{4}
+
+\input{remerciement.tex}
+\input{dedicace.tex}
+\input{résumé.tex}
+
+\clearpage
+\addcontentsline{toc}{chapter}{Table des matières}
+\tableofcontents
+
+\clearpage
+\addcontentsline{toc}{chapter}{Liste des figures}
+\listoffigures
+
+\clearpage
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+\listoftables
+
+\clearpage
+\addcontentsline{toc}{chapter}{Liste des codes sources}
+\listoflistings
+
+\clearpage
+\addcontentsline{toc}{chapter}{Glossaire}
+\printglossary
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\input{chapitres/1}
+\input{chapitres/2}
+\input{chapitres/3}
+
+\clearpage
+\addcontentsline{toc}{chapter}{Webographie}
+\printbibliography[title={Webographie}]
+
+\end{document}

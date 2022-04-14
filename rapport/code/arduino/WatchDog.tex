@@ -1,0 +1,23 @@
+\begin{code}
+\begin{minted}[frame=single, framesep=3mm, linenos=true, xleftmargin=21pt, tabsize=4, fontsize=\small, breaklines]{cpp}
+class Watchdog {
+public:
+    unsigned long long fedAt = 0;
+    unsigned long long barkAfter = 1000;
+    bool bark = false;
+
+    Watchdog() {
+        fedAt = millis();
+    }
+
+    void watch() {
+        bark = millis() > (fedAt + barkAfter);
+    }
+
+    void feed() {
+        fedAt = millis();
+    }
+};
+\end{minted}
+\caption{WatchDog}
+\end{code}
