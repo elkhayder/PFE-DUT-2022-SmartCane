@@ -66,7 +66,7 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(_place?.info.name! ?? "Loading")),
       body: _place == null
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: RepaintBoundary(child: CircularProgressIndicator()))
           : Padding(
               padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
               child: Column(

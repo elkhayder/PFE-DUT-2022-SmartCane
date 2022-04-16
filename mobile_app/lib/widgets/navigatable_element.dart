@@ -51,7 +51,7 @@ class _NavigatableElementState extends State<NavigatableElement> {
         return true;
       },
       child: Focus(
-        child: widget.child,
+        child: RepaintBoundary(child: widget.child),
         focusNode: widget.focusNode,
       ),
     );

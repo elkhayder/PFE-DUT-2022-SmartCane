@@ -20,8 +20,11 @@ import 'package:mobile_app/screens/bottom_navigation_bar.dart';
 import 'package:mobile_app/screens/explore.dart';
 import 'package:mobile_app/screens/find_my_phone.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:flutter_background/flutter_background.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  debugRepaintRainbowEnabled = true;
   runApp(
     MultiProvider(
       providers: [
@@ -56,6 +59,18 @@ class _MyAppState extends State<MyApp> {
     }
 
     initUniLinks();
+
+    FlutterBackground.initialize(
+      androidConfig: const FlutterBackgroundAndroidConfig(
+        notificationTitle: "GuideMe",
+        notificationText: "Watching over you!",
+        notificationImportance: AndroidNotificationImportance.Default,
+        notificationIcon: AndroidResource(
+          name: 'launcher_icon',
+          defType: 'drawable',
+        ),
+      ),
+    ).then((value) => FlutterBackground.enableBackgroundExecution());
   }
 
   Future<void> initUniLinks() async {

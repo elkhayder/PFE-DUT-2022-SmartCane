@@ -23,6 +23,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
       appBar: AppBar(title: const Text("Settings")),
       body: Column(
@@ -36,7 +37,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage;
               String? message = await showEmergencyMessagePopup();
               await prefs.setString(
-                  "emergencyMessage", message ?? Constants.defaultEmergencyMessage);
+                "emergencyMessage",
+                message ?? prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage,
+              );
             },
             child: Container(
               height: 56,
@@ -70,22 +73,27 @@ class _SettingScreenState extends State<SettingScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
-              text: const TextSpan(
+              text: TextSpan(
                 children: [
                   TextSpan(
                     text: "Made with ",
+                    style: textTheme,
                   ),
                   WidgetSpan(
-                    child: Icon(Icons.favorite, size: 14),
+                    child: const Icon(Icons.favorite, size: 14),
+                    style: textTheme,
                   ),
                   TextSpan(
                     text: " and ",
+                    style: textTheme,
                   ),
                   WidgetSpan(
-                    child: Icon(Icons.coffee, size: 14),
+                    child: const Icon(Icons.coffee, size: 14),
+                    style: textTheme,
                   ),
                   TextSpan(
                     text: " by EL KHAYDER and OUCHATO",
+                    style: textTheme,
                   ),
                 ],
               ),

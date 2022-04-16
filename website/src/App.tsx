@@ -81,7 +81,11 @@ const App = () => {
                <h1 className="title">{place?.name}</h1>
                <h2 className="address">{place?.address}</h2>
                <div className="row">
-                  <a href={`https://guideme.elkhayder.me/?id=${place?.id}`}>
+                  <a
+                     href={`https://guideme.elkhayder.me/?id=${place?.id}`}
+                     target="_blank"
+                     rel="noreferrer"
+                  >
                      <button className="purple">
                         <i className="fa-solid fa-location-crosshairs fa-2x" />
                         <span>Open in GuideMe</span>

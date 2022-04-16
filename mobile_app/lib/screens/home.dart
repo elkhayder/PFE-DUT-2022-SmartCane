@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/bluetooth/bluetooth_payload_handler.dart';
 import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/services/location.dart';
 import 'package:mobile_app/services/navigatables.dart';
@@ -16,8 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<GlobalKey> _keys = List.generate(5, (index) => GlobalKey());
-
   @override
   void initState() {
     super.initState();
@@ -101,7 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: smartCane.isConnected ? smartCane.disconnect : smartCane.connect,
           ),
           index: 0,
-          key: _keys[0],
         ),
         _spacing,
         NavigatableElement(
@@ -113,7 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
             style: _outlinedButtonStyle,
           ),
           index: 1,
-          key: _keys[1],
         ),
         _spacing,
         NavigatableElement(
@@ -125,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
             style: _outlinedButtonStyle,
           ),
           index: 2,
-          key: _keys[2],
         ),
         _spacing,
         NavigatableElement(
@@ -137,7 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
             style: _outlinedButtonStyle,
           ),
           index: 3,
-          key: _keys[3],
         ),
         _spacing,
         NavigatableElement(
@@ -149,7 +144,17 @@ class _HomeScreenState extends State<HomeScreen> {
             style: _outlinedButtonStyle,
           ),
           index: 4,
-          key: _keys[4],
+        ),
+        _spacing,
+        NavigatableElement(
+          child: OutlinedButton(
+            onPressed: () {
+              parseBluetoothPayload("SEND_LOCATION_SMS:");
+            },
+            child: const Text("Send current location to emercency contacts"),
+            style: _outlinedButtonStyle,
+          ),
+          index: 4,
         ),
       ],
     );

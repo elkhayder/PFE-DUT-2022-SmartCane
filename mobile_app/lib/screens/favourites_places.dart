@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_directions_api/google_directions_api.dart';
 import 'package:google_place/google_place.dart';
 import 'package:mobile_app/includes/constants.dart';
 import 'package:mobile_app/includes/helpers.dart';
 import 'package:mobile_app/models/place.dart';
+import 'package:mobile_app/widgets/navigatable_element.dart';
+import 'package:mobile_app/widgets/single_search_result.dart';
 
 class FavouritePlacesScreen extends StatefulWidget {
   const FavouritePlacesScreen({Key? key}) : super(key: key);
@@ -46,8 +49,6 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
         } while (response == null && mounted);
 
         _places.add(response!);
-
-        setState(() {});
       } catch (e) {
         inspect(e);
       }
@@ -64,15 +65,53 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
       appBar: AppBar(title: const Text("Saved places")),
       body: _placesIds.isEmpty
           ? const Center(child: Text("You don't have any place on this list yet"))
-          : ListView.separated(
-              itemBuilder: _placeEntryBuilder,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              separatorBuilder: (context, index) => const Divider(
-                height: 1,
-                color: Colors.white30,
-              ),
-              itemCount: _places.length + 1,
-            ),
+          : isLoading
+              ? const Padding(
+                  padding: EdgeInsets.only(top: 32),
+                  child: Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(),
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                )
+              : ListView.separated(
+                  itemBuilder: (_, index) {
+                    if (index == 0) {
+                      return NavigatableElement(
+                        child: SizedBox(
+                          height: 0,
+                          child: OutlinedButton(
+                            onPressed: () {},
+                            child: Container(),
+                          ),
+                        ),
+                        index: index,
+                      );
+                    }
+                    var place = _places.elementAt(index - 1);
+                    return NavigatableElement(
+                      key: ValueKey(place.info.placeId),
+                      index: index,
+                      child: SingleSearchResult(
+                        place: place,
+                        distance: Helpers.distanceTo(
+                          GeoCoord(
+                            place.info.geometry!.location!.lat!,
+                            place.info.geometry!.location!.lng!,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  separatorBuilder: (context, index) => const Divider(
+                    height: 1,
+                    color: Colors.white30,
+                  ),
+                  itemCount: _places.length + 1,
+                ),
     );
   }
 
