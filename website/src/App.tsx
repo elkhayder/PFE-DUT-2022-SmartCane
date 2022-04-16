@@ -92,7 +92,7 @@ const App = () => {
                      </button>
                   </a>
                   <a
-                     href="https://github.com/elkhayder/SmartCane-PFE-2022"
+                     href="https://github.com/elkhayder/SmartCane-PFE-2022/releases/download/Publish/app.apk"
                      target="_blank"
                      rel="noreferrer"
                   >
