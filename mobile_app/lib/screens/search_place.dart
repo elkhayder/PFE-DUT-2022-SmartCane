@@ -122,6 +122,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
                               place.info.geometry!.location!.lng!,
                             ),
                           ),
+                          index: index - 1,
                         ),
                       );
                     },

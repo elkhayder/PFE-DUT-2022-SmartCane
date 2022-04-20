@@ -95,6 +95,7 @@ class _FavouritePlacesScreenState extends State<FavouritePlacesScreen> {
                       key: ValueKey(place.info.placeId),
                       index: index,
                       child: SingleSearchResult(
+                        index: index - 1,
                         place: place,
                         distance: Helpers.distanceTo(
                           GeoCoord(

@@ -72,10 +72,16 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${_place!.info.name} @ ${_place!.info.vicinity}"),
+                  Text(
+                    "${_place!.info.name} @ ${_place!.info.vicinity}",
+                    semanticsLabel:
+                        "Place name is ${_place!.info.name}. Located in ${_place!.info.vicinity} vicinity",
+                  ),
                   const SizedBox(height: 12),
                   Text(
                     "${Helpers.formatDistanceString(distance)}, ${(distance * 1000 / 85).round()} minutes",
+                    semanticsLabel:
+                        "Distance is ${Helpers.formatDistanceString(distance)}. Estimated walking duration ${(distance * 1000 / 85).round()} minutes",
                   ),
                   const SizedBox(height: 24),
                   NavigatableElement(
@@ -152,6 +158,7 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
         "Walking",
         Icons.directions_walk,
         "w", // Google maps for walking
+        "Open google maps for walking directions",
       ]);
     }
 
@@ -168,6 +175,7 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
         "Bicyclette",
         Icons.directions_bike,
         "b", // Google maps for bicycling
+        "Open google maps for bicyclling directions",
       ]);
     }
 
@@ -176,6 +184,7 @@ class _PlaceInfosScreenState extends State<PlaceInfosScreen> {
         "Driving",
         Icons.directions_car,
         "d", // Google maps for driving
+        "Open google maps for driving directions",
       ]);
     }
 

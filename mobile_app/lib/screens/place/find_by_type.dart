@@ -157,11 +157,12 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
                       index: index,
                     );
                   }
-                  var place = _places.elementAt(index);
+                  var place = _places.elementAt(index - 1);
                   return NavigatableElement(
                     key: ValueKey(place.info.placeId),
                     index: index,
                     child: SingleSearchResult(
+                      index: index - 1,
                       place: place,
                       distance: Helpers.distanceTo(
                         GeoCoord(
@@ -177,7 +178,7 @@ class _FindPlacesByTypeScreenState extends State<FindPlacesByTypeScreen> {
                   height: 1,
                   color: Colors.white30,
                 ),
-                itemCount: _places.length,
+                itemCount: _places.length + 1,
               ),
             ),
     );

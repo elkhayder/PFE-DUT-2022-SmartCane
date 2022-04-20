@@ -21,10 +21,10 @@ import 'package:mobile_app/screens/explore.dart';
 import 'package:mobile_app/screens/find_my_phone.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_background/flutter_background.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 
 void main() {
-  debugRepaintRainbowEnabled = true;
+  // debugRepaintRainbowEnabled = true;
   runApp(
     MultiProvider(
       providers: [

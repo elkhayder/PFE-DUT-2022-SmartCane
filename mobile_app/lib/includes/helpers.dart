@@ -68,12 +68,16 @@ class Helpers {
 
     _places.add(placeId);
 
+    speak("Place added to favourites list");
+
     return await prefs.setStringList("favorite_places_ids", _places);
   }
 
   static Future<bool> removeFavouritePlace(String placeId) async {
     var _places = await favouritePlaces();
     final prefs = await SharedPreferences.getInstance();
+
+    speak("Place removed from favourites list");
 
     return await prefs.setStringList(
       "favorite_places_ids",

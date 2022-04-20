@@ -146,15 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
           index: 4,
         ),
         _spacing,
-        NavigatableElement(
-          child: OutlinedButton(
-            onPressed: () {
-              parseBluetoothPayload("SEND_LOCATION_SMS:");
-            },
-            child: const Text("Send current location to emercency contacts"),
-            style: _outlinedButtonStyle,
-          ),
-          index: 4,
+        OutlinedButton(
+          onPressed: () {
+            parseBluetoothPayload("SEND_LOCATION_SMS:");
+          },
+          child: const Text("Send current location to emercency contacts"),
+          style: _outlinedButtonStyle,
         ),
       ],
     );

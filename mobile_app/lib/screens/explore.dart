@@ -60,6 +60,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             height: index == 0 ? 0 : 56,
             child: NavigatableElement(
               child: OutlinedButton(
+                autofocus: index == 1,
                 child: Text(locationType.label),
                 onPressed: () {
                   Navigator.of(context).pushNamed(

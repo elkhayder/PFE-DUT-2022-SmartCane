@@ -5,8 +5,14 @@ import 'package:mobile_app/models/place.dart';
 class SingleSearchResult extends StatelessWidget {
   Place place;
   double? distance;
+  int index;
 
-  SingleSearchResult({Key? key, required this.place, this.distance}) : super(key: key);
+  SingleSearchResult({
+    Key? key,
+    required this.place,
+    this.distance,
+    required this.index,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +22,7 @@ class SingleSearchResult extends StatelessWidget {
             : null);
 
     return InkWell(
+      autofocus: index == 0,
       onTap: () {
         Navigator.of(context).pushNamed(
           "/places/info",

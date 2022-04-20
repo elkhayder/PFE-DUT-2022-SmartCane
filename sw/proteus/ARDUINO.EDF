@@ -1,0 +1,580 @@
+(PCB ARDUINO
+ (parser
+  (host_cad ARES)
+  (host_version 8.10 SP3)
+ )
+ (resolution mm 100000)
+ (unit mm)
+ (structure
+  (boundary (rect pcb -54.60160 -40.20160 54.90160 30.80160))
+  (boundary (path signal 0.20320 -54.50000 -40.10000 54.80000 -40.10000 54.80000 30.70000
+   -54.50000 30.70000 -54.50000 -40.10000))
+  (flip_style mirror_first)
+  (layer TOP (type signal) (direction off))
+  (layer I1 (type signal) (direction off))
+  (layer I2 (type signal) (direction off))
+  (layer I3 (type signal) (direction off))
+  (layer I4 (type signal) (direction off))
+  (layer I5 (type signal) (direction off))
+  (layer I6 (type signal) (direction off))
+  (layer I7 (type signal) (direction off))
+  (layer I8 (type signal) (direction off))
+  (layer I9 (type signal) (direction off))
+  (layer I10 (type signal) (direction off))
+  (layer I11 (type signal) (direction off))
+  (layer I12 (type signal) (direction off))
+  (layer I13 (type signal) (direction off))
+  (layer I14 (type signal) (direction off))
+  (layer BOT (type signal) (direction orthogonal))
+  (grid via  0.12700)
+  (grid wire 0.12700)
+  (control
+   (via_at_smd off)
+   (off_grid on)
+  )
+  (via
+   $VIA#0_SIGNAL
+   (spare
+    $VIA#0_POWER
+   )
+  )
+  (rule
+   (width 0.50800)
+   (clearance 0.38100)
+   (clearance 0.25400 (type wire_via))
+   (clearance 0.25400 (type wire_smd))
+   (clearance 0.25400 (type wire_pin))
+   (clearance 0.25400 (type wire_wire))
+   (clearance 0.25400 (type via_pin))
+   (clearance 0.25400 (type via_via))
+   (clearance 0.25400 (type via_smd))
+  )
+ )
+ (placement
+  (component MODULE_ABX00028_NANO (place NANO -1.90000 -4.50000 front 0))
+  (component DIL16_L293D (place L293D 23.80000 -7.50000 front 0))
+  (component "2 PIN HEADER_M1" (place M1 33.10000 7.60000 front 0))
+  (component "2 PIN HEADER_M2" (place M2 30.76000 -15.30000 front 180))
+  (component "2 PIN HEADER_BATTERY" (place BATTERY 41.80000 4.80000 front 270))
+  (component "2 PIN HEADER_HIGH SPEAKER" (place "HIGH SPEAKER" -14.83000 -16.77000 front 0
+  ))
+  (component "2 PIN HEADER_FLASHLIGHT" (place FLASHLIGHT 4.50000 -17.40000 front 0))
+  (component "6 PIN F-HEADER_HC- 05 BT" (place "HC- 05 BT" -33.50000 -11.28000 front 270
+  ))
+  (component "8PIN HEADER_BUTTONS" (place BUTTONS -0.84000 12.20000 front 180))
+  (component "2 PIN HEADER_ON/OFF" (place ON/OFF 43.64000 -16.00000 front 0))
+  (component "4 PIN_HC-SR04" (place "HC-SR04" -18.68000 10.20000 front 0))
+ )
+ (library
+  (image MODULE_ABX00028_NANO (side front)
+   (outline (rect TOP -21.86500 -9.70000 21.86500 9.16500))
+   (pin PS0 (rotate 0) 0 -17.78000 -7.62000)
+   (pin PS1 (rotate 0) 1 -15.24000 -7.62000)
+   (pin PS1 (rotate 0) 2 -12.70000 -7.62000)
+   (pin PS1 (rotate 0) 3 -10.16000 -7.62000)
+   (pin PS1 (rotate 0) 4 -7.62000 -7.62000)
+   (pin PS1 (rotate 0) 5 -5.08000 -7.62000)
+   (pin PS1 (rotate 0) 6 -2.54000 -7.62000)
+   (pin PS1 (rotate 0) 7 0.00000 -7.62000)
+   (pin PS1 (rotate 0) 8 2.54000 -7.62000)
+   (pin PS1 (rotate 0) 9 5.08000 -7.62000)
+   (pin PS1 (rotate 0) 10 7.62000 -7.62000)
+   (pin PS1 (rotate 0) 11 10.16000 -7.62000)
+   (pin PS1 (rotate 0) 12 12.70000 -7.62000)
+   (pin PS1 (rotate 0) 13 15.24000 -7.62000)
+   (pin PS1 (rotate 0) 14 17.78000 -7.62000)
+   (pin PS1 (rotate 0) 15 17.78000 7.62000)
+   (pin PS1 (rotate 0) 16 15.24000 7.62000)
+   (pin PS1 (rotate 0) 17 12.70000 7.62000)
+   (pin PS1 (rotate 0) 18 10.16000 7.62000)
+   (pin PS1 (rotate 0) 19 7.62000 7.62000)
+   (pin PS1 (rotate 0) 20 5.08000 7.62000)
+   (pin PS1 (rotate 0) 21 2.54000 7.62000)
+   (pin PS1 (rotate 0) 22 0.00000 7.62000)
+   (pin PS1 (rotate 0) 23 -2.54000 7.62000)
+   (pin PS1 (rotate 0) 24 -5.08000 7.62000)
+   (pin PS1 (rotate 0) 25 -7.62000 7.62000)
+   (pin PS1 (rotate 0) 26 -10.16000 7.62000)
+   (pin PS1 (rotate 0) 27 -12.70000 7.62000)
+   (pin PS1 (rotate 0) 28 -15.24000 7.62000)
+   (pin PS1 (rotate 0) 29 -17.78000 7.62000)
+   (pin PS2 (rotate 0) 30 -20.32000 -7.62000)
+   (pin PS2 (rotate 0) 31 -20.32000 7.62000)
+   (pin PS2 (rotate 0) 32 20.32000 7.62000)
+   (pin PS2 (rotate 0) 33 20.32000 -7.62000)
+  )
+  (image DIL16_L293D (side front)
+   (outline (rect TOP -1.37160 -0.63500 19.15160 8.25500))
+   (pin PS3 (rotate 0) 0 0.00000 0.00000)
+   (pin PS4 (rotate 0) 1 2.54000 0.00000)
+   (pin PS4 (rotate 0) 2 5.08000 0.00000)
+   (pin PS4 (rotate 0) 3 7.62000 0.00000)
+   (pin PS4 (rotate 0) 4 10.16000 0.00000)
+   (pin PS4 (rotate 0) 5 12.70000 0.00000)
+   (pin PS4 (rotate 0) 6 15.24000 0.00000)
+   (pin PS4 (rotate 0) 7 17.78000 0.00000)
+   (pin PS4 (rotate 0) 8 17.78000 7.62000)
+   (pin PS4 (rotate 0) 9 15.24000 7.62000)
+   (pin PS4 (rotate 0) 10 12.70000 7.62000)
+   (pin PS4 (rotate 0) 11 10.16000 7.62000)
+   (pin PS4 (rotate 0) 12 7.62000 7.62000)
+   (pin PS4 (rotate 0) 13 5.08000 7.62000)
+   (pin PS4 (rotate 0) 14 2.54000 7.62000)
+   (pin PS4 (rotate 0) 15 0.00000 7.62000)
+  )
+  (image "2 PIN HEADER_M1" (side front)
+   (outline (rect TOP -3.65940 -1.33680 1.07940 1.33020))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+  )
+  (image "2 PIN HEADER_M2" (side front)
+   (outline (rect TOP -3.65940 -1.33680 1.07940 1.33020))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+  )
+  (image "2 PIN HEADER_BATTERY" (side front)
+   (outline (rect TOP -3.65940 -1.33680 1.07940 1.33020))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+  )
+  (image "2 PIN HEADER_HIGH SPEAKER" (side front)
+   (outline (rect TOP -3.65940 -1.33680 1.07940 1.33020))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+  )
+  (image "2 PIN HEADER_FLASHLIGHT" (side front)
+   (outline (rect TOP -3.65940 -1.33680 1.07940 1.33020))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+  )
+  (image "6 PIN F-HEADER_HC- 05 BT" (side front)
+   (outline (rect TOP -13.85470 -1.29000 1.09470 1.25000))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+   (pin PS5 (rotate 0) 2 -5.08000 0.00000)
+   (pin PS5 (rotate 0) 3 -7.62000 0.00000)
+   (pin PS5 (rotate 0) 4 -10.16000 0.00000)
+   (pin PS5 (rotate 0) 5 -12.70000 0.00000)
+  )
+  (image "8PIN HEADER_BUTTONS" (side front)
+   (outline (rect TOP -19.15470 -1.29000 1.23470 1.31000))
+   (pin PS1 (rotate 0) 0 0.00000 0.00000)
+   (pin PS1 (rotate 0) 1 -2.54000 0.00000)
+   (pin PS1 (rotate 0) 2 -5.08000 0.00000)
+   (pin PS1 (rotate 0) 3 -7.62000 0.00000)
+   (pin PS1 (rotate 0) 4 -10.16000 0.00000)
+   (pin PS1 (rotate 0) 5 -12.70000 0.00000)
+   (pin PS1 (rotate 0) 6 -15.24000 0.00000)
+   (pin PS1 (rotate 0) 7 -17.78000 0.00000)
+  )
+  (image "2 PIN HEADER_ON/OFF" (side front)
+   (outline (rect TOP -3.65940 -1.33680 1.07940 1.33020))
+   (pin PS5 (rotate 0) 0 0.00000 0.00000)
+   (pin PS5 (rotate 0) 1 -2.54000 0.00000)
+  )
+  (image "4 PIN_HC-SR04" (side front)
+   (outline (rect TOP -0.76500 -0.76500 8.38500 0.76500))
+   (pin PS6 (rotate 0) 0 0.00000 0.00000)
+   (pin PS6 (rotate 0) 1 2.54000 0.00000)
+   (pin PS6 (rotate 0) 2 5.08000 0.00000)
+   (pin PS6 (rotate 0) 3 7.62000 0.00000)
+  )
+  (padstack PS0 (absolute on)
+   (shape (rect TOP -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I1 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I2 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I3 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I4 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I5 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I6 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I7 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I8 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I9 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I10 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I11 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I12 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I13 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect I14 -0.76200 -0.76200 0.76200 0.76200))
+   (shape (rect BOT -0.76200 -0.76200 0.76200 0.76200))
+  )
+  (padstack PS1 (absolute on)
+   (shape (circle TOP 1.52400 0 0))
+   (shape (circle I1 1.52400 0 0))
+   (shape (circle I2 1.52400 0 0))
+   (shape (circle I3 1.52400 0 0))
+   (shape (circle I4 1.52400 0 0))
+   (shape (circle I5 1.52400 0 0))
+   (shape (circle I6 1.52400 0 0))
+   (shape (circle I7 1.52400 0 0))
+   (shape (circle I8 1.52400 0 0))
+   (shape (circle I9 1.52400 0 0))
+   (shape (circle I10 1.52400 0 0))
+   (shape (circle I11 1.52400 0 0))
+   (shape (circle I12 1.52400 0 0))
+   (shape (circle I13 1.52400 0 0))
+   (shape (circle I14 1.52400 0 0))
+   (shape (circle BOT 1.52400 0 0))
+  )
+  (padstack PS2 (absolute on)
+   (shape (circle TOP 1.52400 0 0))
+   (shape (circle I1 1.52400 0 0))
+   (shape (circle I2 1.52400 0 0))
+   (shape (circle I3 1.52400 0 0))
+   (shape (circle I4 1.52400 0 0))
+   (shape (circle I5 1.52400 0 0))
+   (shape (circle I6 1.52400 0 0))
+   (shape (circle I7 1.52400 0 0))
+   (shape (circle I8 1.52400 0 0))
+   (shape (circle I9 1.52400 0 0))
+   (shape (circle I10 1.52400 0 0))
+   (shape (circle I11 1.52400 0 0))
+   (shape (circle I12 1.52400 0 0))
+   (shape (circle I13 1.52400 0 0))
+   (shape (circle I14 1.52400 0 0))
+   (shape (circle BOT 1.52400 0 0))
+  )
+  (padstack PS3 (absolute on)
+   (shape (rect TOP -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I1 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I2 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I3 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I4 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I5 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I6 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I7 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I8 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I9 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I10 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I11 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I12 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I13 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect I14 -0.63500 -0.63500 0.63500 0.63500))
+   (shape (rect BOT -0.63500 -0.63500 0.63500 0.63500))
+  )
+  (padstack PS4 (absolute on)
+   (shape (circle TOP 1.27000 0 0))
+   (shape (circle I1 1.27000 0 0))
+   (shape (circle I2 1.27000 0 0))
+   (shape (circle I3 1.27000 0 0))
+   (shape (circle I4 1.27000 0 0))
+   (shape (circle I5 1.27000 0 0))
+   (shape (circle I6 1.27000 0 0))
+   (shape (circle I7 1.27000 0 0))
+   (shape (circle I8 1.27000 0 0))
+   (shape (circle I9 1.27000 0 0))
+   (shape (circle I10 1.27000 0 0))
+   (shape (circle I11 1.27000 0 0))
+   (shape (circle I12 1.27000 0 0))
+   (shape (circle I13 1.27000 0 0))
+   (shape (circle I14 1.27000 0 0))
+   (shape (circle BOT 1.27000 0 0))
+  )
+  (padstack PS5 (absolute on)
+   (shape (circle TOP 1.52400 0 0))
+   (shape (circle I1 1.52400 0 0))
+   (shape (circle I2 1.52400 0 0))
+   (shape (circle I3 1.52400 0 0))
+   (shape (circle I4 1.52400 0 0))
+   (shape (circle I5 1.52400 0 0))
+   (shape (circle I6 1.52400 0 0))
+   (shape (circle I7 1.52400 0 0))
+   (shape (circle I8 1.52400 0 0))
+   (shape (circle I9 1.52400 0 0))
+   (shape (circle I10 1.52400 0 0))
+   (shape (circle I11 1.52400 0 0))
+   (shape (circle I12 1.52400 0 0))
+   (shape (circle I13 1.52400 0 0))
+   (shape (circle I14 1.52400 0 0))
+   (shape (circle BOT 1.52400 0 0))
+  )
+  (padstack PS6 (absolute on)
+   (shape (circle TOP 1.53000 0 0))
+   (shape (circle I1 1.53000 0 0))
+   (shape (circle I2 1.53000 0 0))
+   (shape (circle I3 1.53000 0 0))
+   (shape (circle I4 1.53000 0 0))
+   (shape (circle I5 1.53000 0 0))
+   (shape (circle I6 1.53000 0 0))
+   (shape (circle I7 1.53000 0 0))
+   (shape (circle I8 1.53000 0 0))
+   (shape (circle I9 1.53000 0 0))
+   (shape (circle I10 1.53000 0 0))
+   (shape (circle I11 1.53000 0 0))
+   (shape (circle I12 1.53000 0 0))
+   (shape (circle I13 1.53000 0 0))
+   (shape (circle I14 1.53000 0 0))
+   (shape (circle BOT 1.53000 0 0))
+  )
+  (padstack $VIA#0_SIGNAL (absolute on)
+   (shape (circle TOP 0.76200 0 0))
+   (shape (circle I1 0.76200 0 0))
+   (shape (circle I2 0.76200 0 0))
+   (shape (circle I3 0.76200 0 0))
+   (shape (circle I4 0.76200 0 0))
+   (shape (circle I5 0.76200 0 0))
+   (shape (circle I6 0.76200 0 0))
+   (shape (circle I7 0.76200 0 0))
+   (shape (circle I8 0.76200 0 0))
+   (shape (circle I9 0.76200 0 0))
+   (shape (circle I10 0.76200 0 0))
+   (shape (circle I11 0.76200 0 0))
+   (shape (circle I12 0.76200 0 0))
+   (shape (circle I13 0.76200 0 0))
+   (shape (circle I14 0.76200 0 0))
+   (shape (circle BOT 0.76200 0 0))
+  )
+  (padstack $VIA#0_POWER (absolute on)
+   (shape (circle TOP 0.76200 0 0))
+   (shape (circle I1 0.76200 0 0))
+   (shape (circle I2 0.76200 0 0))
+   (shape (circle I3 0.76200 0 0))
+   (shape (circle I4 0.76200 0 0))
+   (shape (circle I5 0.76200 0 0))
+   (shape (circle I6 0.76200 0 0))
+   (shape (circle I7 0.76200 0 0))
+   (shape (circle I8 0.76200 0 0))
+   (shape (circle I9 0.76200 0 0))
+   (shape (circle I10 0.76200 0 0))
+   (shape (circle I11 0.76200 0 0))
+   (shape (circle I12 0.76200 0 0))
+   (shape (circle I13 0.76200 0 0))
+   (shape (circle I14 0.76200 0 0))
+   (shape (circle BOT 0.76200 0 0))
+  )
+ )
+ (network
+  (net "#00003"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-11 L293D-0 "HC- 05 BT"-1 BUTTONS-1 "HC-SR04"-0)
+  )
+  (net "#00005"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-4 FLASHLIGHT-1)
+  )
+  (net "#00011"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-10 BUTTONS-2)
+  )
+  (net "#00013"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-27 BUTTONS-6)
+  )
+  (net "#00014"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-28 "HIGH SPEAKER"-0)
+  )
+  (net "#00015"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-29 BUTTONS-4)
+  )
+  (net "#00016"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-0 BUTTONS-3)
+  )
+  (net "#00017"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-19 "HC- 05 BT"-5)
+  )
+  (net "#00018"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-20 "HC- 05 BT"-4)
+  )
+  (net "#00019"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-21 "HC- 05 BT"-3)
+  )
+  (net "#00020"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-22 L293D-1 L293D-6)
+  )
+  (net "#00021"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-23 BUTTONS-5)
+  )
+  (net "#00022"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-24 "HC-SR04"-1)
+  )
+  (net "#00023"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-25 "HC-SR04"-2)
+  )
+  (net "#00024"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-26 BUTTONS-7)
+  )
+  (net "#00029"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins NANO-14 ON/OFF-1)
+  )
+  (net "#00030"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins L293D-2 M1-1)
+  )
+  (net "#00031"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins L293D-5 M2-1)
+  )
+  (net "#00040"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_SIGNAL
+    )
+   )
+   (pins BATTERY-1 ON/OFF-0)
+  )
+  (net "GND"
+   (circuit
+    (use_layer BOT)
+    (use_via
+     $VIA#0_POWER
+    )
+   )
+    (pins NANO-13 NANO-18 L293D-3 L293D-4 L293D-11 L293D-12 M1-0 M2-0 BATTERY-0 "HIGH SPEAKER"-1
+    FLASHLIGHT-0 "HC- 05 BT"-2 BUTTONS-0 "HC-SR04"-3)
+  )
+  (class POWER
+   "GND"
+   (rule
+    (width 0.50800)
+    (clearance 0.38100)
+    (clearance 0.25400 (type wire_via))
+    (clearance 0.25400 (type wire_smd))
+    (clearance 0.25400 (type wire_pin))
+    (clearance 0.25400 (type wire_wire))
+    (clearance 0.25400 (type via_pin))
+    (clearance 0.25400 (type via_via))
+    (clearance 0.25400 (type via_smd))
+   )
+  )
+  (class SIGNAL
+   "#00003"
+   "#00005"
+   "#00011"
+   "#00013"
+   "#00014"
+   "#00015"
+   "#00016"
+   "#00017"
+   "#00018"
+   "#00019"
+   "#00020"
+   "#00021"
+   "#00022"
+   "#00023"
+   "#00024"
+   "#00029"
+   "#00030"
+   "#00031"
+   "#00040"
+   "{NC}"
+   "{VOID}"
+   (rule
+    (width 0.50800)
+    (clearance 0.38100)
+    (clearance 0.25400 (type wire_via))
+    (clearance 0.25400 (type wire_smd))
+    (clearance 0.25400 (type wire_pin))
+    (clearance 0.25400 (type wire_wire))
+    (clearance 0.25400 (type via_pin))
+    (clearance 0.25400 (type via_via))
+    (clearance 0.25400 (type via_smd))
+   )
+  )
+ )
+ (wiring
+  (wire (path BOT 0.50800 23.80000 -7.50000 22.09800 -7.50000) (net "#00003"))
+  (wire (path BOT 0.50800 31.42000 -7.50000 33.96000 -7.50000) (net "GND"))
+ )
+)
