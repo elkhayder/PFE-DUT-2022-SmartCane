@@ -34,11 +34,13 @@ class _SettingScreenState extends State<SettingScreen> {
             onTap: () async {
               var prefs = await SharedPreferences.getInstance();
               emergencyMessageController.text =
-                  prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage;
+                  prefs.getString("emergencyMessage") ?? Constants.Default_Emergency_Message;
               String? message = await showEmergencyMessagePopup();
               await prefs.setString(
                 "emergencyMessage",
-                message ?? prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage,
+                message ??
+                    prefs.getString("emergencyMessage") ??
+                    Constants.Default_Emergency_Message,
               );
             },
             child: Container(

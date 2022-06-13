@@ -20,7 +20,7 @@ class SendCurrentLocationSMS implements BluetoothPayloadHandler {
     var currentLocation = await location.updateCurrentLocation();
     var prefs = await SharedPreferences.getInstance();
 
-    String message = prefs.getString("emergencyMessage") ?? Constants.defaultEmergencyMessage;
+    String message = prefs.getString("emergencyMessage") ?? Constants.Default_Emergency_Message;
 
     if (currentLocation?.longitude != null && currentLocation?.latitude != null) {
       message +=

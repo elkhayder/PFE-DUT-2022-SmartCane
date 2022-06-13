@@ -200,7 +200,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget _errorScreen(RouteSettings settings) {
     return Center(
-      child: Text("Error: ${settings.name} not found"),
+      child: Text("Error: route ${settings.name} not found"),
     );
   }
 }

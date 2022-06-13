@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/bluetooth/bluetooth_payload_handler.dart';
-import 'package:mobile_app/includes/navigation.dart';
 import 'package:mobile_app/services/location.dart';
-import 'package:mobile_app/services/navigatables.dart';
 import 'package:mobile_app/widgets/navigatable_element.dart';
 import 'package:provider/provider.dart';
-import 'package:android_intent_plus/android_intent.dart';
 
 import '../services/smart_cane.dart';
 
