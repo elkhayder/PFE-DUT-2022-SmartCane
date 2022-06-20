@@ -23,7 +23,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
       appBar: AppBar(title: const Text("Settings")),
       body: Column(
@@ -75,28 +74,14 @@ class _SettingScreenState extends State<SettingScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
+                style: TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic),
                 children: [
-                  TextSpan(
-                    text: "Made with ",
-                    style: textTheme,
-                  ),
-                  WidgetSpan(
-                    child: const Icon(Icons.favorite, size: 14),
-                    style: textTheme,
-                  ),
-                  TextSpan(
-                    text: " and ",
-                    style: textTheme,
-                  ),
-                  WidgetSpan(
-                    child: const Icon(Icons.coffee, size: 14),
-                    style: textTheme,
-                  ),
-                  TextSpan(
-                    text: " by EL KHAYDER and OUCHATO",
-                    style: textTheme,
-                  ),
+                  TextSpan(text: "Made with "),
+                  WidgetSpan(child: Icon(Icons.favorite, size: 14, color: Colors.grey)),
+                  TextSpan(text: " and "),
+                  WidgetSpan(child: Icon(Icons.coffee, size: 14, color: Colors.grey)),
+                  TextSpan(text: " by EL KHAYDER and OUCHATO"),
                 ],
               ),
             ),

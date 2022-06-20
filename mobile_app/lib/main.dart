@@ -21,7 +21,7 @@ import 'package:mobile_app/screens/explore.dart';
 import 'package:mobile_app/screens/find_my_phone.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_background/flutter_background.dart';
-// import 'package:flutter/rendering.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   // debugRepaintRainbowEnabled = true;
@@ -57,6 +57,13 @@ class _MyAppState extends State<MyApp> {
     if (Platform.isAndroid) {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
+
+    [
+      Permission.bluetooth,
+      Permission.bluetoothAdvertise,
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan,
+    ].request();
 
     initUniLinks();
 

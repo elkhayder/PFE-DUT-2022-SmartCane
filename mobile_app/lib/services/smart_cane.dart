@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -30,7 +31,7 @@ class SmartCaneService extends ChangeNotifier {
     // SMART CANE : 98:D3:33:81:3D:33
     const String address = "98:D3:33:81:3D:33";
     try {
-      // print("Connecting to bluetooth device: $address");
+      print("Connecting to bluetooth device: $address");
 
       _connection = await BluetoothConnection.toAddress(address);
       // print('Connected to the device');
@@ -38,6 +39,7 @@ class SmartCaneService extends ChangeNotifier {
       _connection?.input?.listen(_onRecievePayload);
     } catch (exception) {
       isConnected = false;
+      inspect(exception);
       // print("Failed connecting to bluetooth Device : $address");
       // await FlutterBluetoothSerial.instance.requestDisable();
       // await FlutterBluetoothSerial.instance.requestEnable();
