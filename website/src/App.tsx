@@ -33,7 +33,7 @@ const App = () => {
 
       apiEndpoint.searchParams.append(
          "key",
-         "AIzaSyBqJ0ixB7WeMXMdCHq57aDErVRPQK1HGt4"
+         "AIzaSyBag4BLkQ0sHLLJT-RqkeH3SiXTsHdCLZ0"
       );
 
       const request = await fetch(apiEndpoint.toString())
